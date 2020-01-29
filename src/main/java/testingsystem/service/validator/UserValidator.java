@@ -1,6 +1,6 @@
 package testingsystem.service.validator;
 
-import testingsystem.domain.User;
+import testingsystem.entity.User;
 
 public class UserValidator implements Validator<User>{
     @Override

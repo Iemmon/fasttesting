@@ -1,20 +1,15 @@
 package testingsystem;
 
-import testingsystem.database.HikariCPDataSource;
-import testingsystem.domain.Role;
-import testingsystem.domain.User;
+import testingsystem.dao.pagination.Page;
+import testingsystem.dao.pagination.PageRequest;
+import testingsystem.entity.Question;
+import testingsystem.entity.Role;
+import testingsystem.entity.User;
 import testingsystem.injector.ApplicationInjector;
-import testingsystem.service.PasswordEncryption;
-import testingsystem.service.implementation.UserServiceImpl;
 import testingsystem.service.interfacepack.UserService;
 
-import java.sql.Connection;
-import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.Optional;
 
-/**
- * Hello world!
- */
 public class App {
 
     public static void main(String[] args) throws Exception {
@@ -29,9 +24,15 @@ public class App {
         } else {
             System.out.println("fail");
         }
+
+        Page page = ApplicationInjector.USER_DAO.findAll(new PageRequest(1, 10));
+        System.out.println("items per page " + page.getItemsPerPage());
+        System.out.println("count "+ ApplicationInjector.USER_DAO.count());
+        System.out.println("max page number " + page.getMaxPageNumber());
         System.out.println(userService.login("hrbfosd@gmail.com", "Re1iab1ePa$$"));
-
+       Optional<Question> question = ApplicationInjector.QUESTION_DAO.findById(1L);
+        System.out.println(question.get().getMultiChoice().get(0).getAnswerOption());
+        System.out.println(question.get().getMultiChoice().get(0).isCorrect());
     }
-
 }
 

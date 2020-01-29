@@ -1,6 +1,6 @@
 package testingsystem.service.interfacepack;
 
-import testingsystem.domain.Topic;
+import testingsystem.entity.Topic;
 
 public interface TopicService {
     Topic get(Long id);

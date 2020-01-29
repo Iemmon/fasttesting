@@ -1,8 +1,8 @@
 package testingsystem.service.interfacepack;
 
-import testingsystem.domain.Result;
-import testingsystem.domain.Test;
-import testingsystem.domain.User;
+import testingsystem.entity.Result;
+import testingsystem.entity.Test;
+import testingsystem.entity.User;
 
 import java.util.List;
 

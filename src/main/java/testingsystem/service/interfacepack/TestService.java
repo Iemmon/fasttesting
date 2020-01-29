@@ -1,6 +1,6 @@
 package testingsystem.service.interfacepack;
 
-import testingsystem.domain.Test;
+import testingsystem.entity.Test;
 
 import java.util.List;
 

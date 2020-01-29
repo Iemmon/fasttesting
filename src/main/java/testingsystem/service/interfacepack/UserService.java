@@ -1,7 +1,7 @@
 package testingsystem.service.interfacepack;
 
-import testingsystem.database.exception.DataBaseSqlRuntimeException;
-import testingsystem.domain.User;
+import testingsystem.dao.exception.DataBaseSqlRuntimeException;
+import testingsystem.entity.User;
 
 import java.util.List;
 import java.util.Optional;

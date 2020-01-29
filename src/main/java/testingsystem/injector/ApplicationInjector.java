@@ -1,17 +1,19 @@
 package testingsystem.injector;
 
-import testingsystem.database.ConnectionPool;
-import testingsystem.database.HikariCPDataSource;
-import testingsystem.database.dao.implementation.UserDaoImpl;
-import testingsystem.database.dao.interfacepack.UserDao;
-import testingsystem.domain.User;
+import testingsystem.dao.ConnectionPool;
+import testingsystem.dao.HikariCPDataSource;
+import testingsystem.dao.impl.QuestionDaoImpl;
+import testingsystem.dao.impl.TopicDaoImpl;
+import testingsystem.dao.impl.UserDaoImpl;
+import testingsystem.dao.interfacepack.QuestionDao;
+import testingsystem.dao.interfacepack.TopicDao;
+import testingsystem.dao.interfacepack.UserDao;
+import testingsystem.entity.User;
 import testingsystem.service.PasswordEncryption;
-import testingsystem.service.implementation.UserServiceImpl;
+import testingsystem.service.impl.UserServiceImpl;
 import testingsystem.service.interfacepack.UserService;
 import testingsystem.service.validator.UserValidator;
 import testingsystem.service.validator.Validator;
-
-import java.sql.Connection;
 
 public class ApplicationInjector {
 
@@ -23,7 +25,9 @@ public class ApplicationInjector {
 
     private static final ConnectionPool DATA_SOURCE = new HikariCPDataSource();
 
-    private static final UserDao USER_DAO = new UserDaoImpl(DATA_SOURCE);
+//    TODO: Change to private
+    public static final UserDao USER_DAO = new UserDaoImpl(DATA_SOURCE);
+    public static final QuestionDao QUESTION_DAO = new QuestionDaoImpl(DATA_SOURCE);
 
     private static final UserService USER_SERVICE = new UserServiceImpl(USER_DAO, PASSWORD_ENCRYPTION, USER_VALIDATOR);
 
