@@ -3,7 +3,7 @@ package testingsystem.service.impl;
 import testingsystem.entity.Result;
 import testingsystem.entity.Test;
 import testingsystem.entity.User;
-import testingsystem.service.interfacepack.ResultService;
+import testingsystem.service.ResultService;
 
 import java.util.List;
 

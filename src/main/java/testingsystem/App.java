@@ -6,8 +6,9 @@ import testingsystem.entity.Question;
 import testingsystem.entity.Role;
 import testingsystem.entity.User;
 import testingsystem.injector.ApplicationInjector;
-import testingsystem.service.interfacepack.UserService;
+import testingsystem.service.UserService;
 
+import java.util.List;
 import java.util.Optional;
 
 public class App {
@@ -31,8 +32,14 @@ public class App {
         System.out.println("max page number " + page.getMaxPageNumber());
         System.out.println(userService.login("hrbfosd@gmail.com", "Re1iab1ePa$$"));
        Optional<Question> question = ApplicationInjector.QUESTION_DAO.findById(1L);
-        System.out.println(question.get().getMultiChoice().get(0).getAnswerOption());
-        System.out.println(question.get().getMultiChoice().get(0).isCorrect());
+        List<Question> listOfQuestions = ApplicationInjector.QUESTION_DAO.findAllByTestId(1L);
+
+        for(Question q : listOfQuestions){
+            System.out.println(q.toString());
+        }
+
+//        System.out.println(question.get().getMultiChoice().get(0).getAnswerOption());
+//        System.out.println(question.get().getMultiChoice().get(0).isCorrect());
     }
 }
 

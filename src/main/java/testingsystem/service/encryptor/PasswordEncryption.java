@@ -1,4 +1,4 @@
-package testingsystem.service;
+package testingsystem.service.encryptor;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;

@@ -1,7 +1,7 @@
 package testingsystem.service.impl;
 
 import testingsystem.entity.Test;
-import testingsystem.service.interfacepack.TestService;
+import testingsystem.service.TestService;
 
 import java.util.List;
 

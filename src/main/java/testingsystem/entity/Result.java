@@ -1,9 +1,9 @@
 package testingsystem.entity;
 
 public class Result {
-    Long id;
-    Test test;
-    Integer score;
+    private Long id;
+    private Test test;
+    private Integer score;
 
     public Result(Long resultId, Integer score) {
         this.id = resultId;

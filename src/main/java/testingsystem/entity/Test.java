@@ -1,11 +1,8 @@
 package testingsystem.entity;
 
-import java.util.List;
-
 public class Test {
-    Long id;
-    String name;
-    List<Question> listOfQuestions;
+    private Long id;
+    private String name;
 
     public Test(Long id, String name) {
         this.id = id;

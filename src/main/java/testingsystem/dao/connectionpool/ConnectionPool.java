@@ -1,4 +1,4 @@
-package testingsystem.dao;
+package testingsystem.dao.connectionpool;
 
 import java.sql.Connection;
 import java.sql.SQLException;

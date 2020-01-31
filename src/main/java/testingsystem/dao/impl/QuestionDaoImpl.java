@@ -1,9 +1,9 @@
 package testingsystem.dao.impl;
 
 import org.apache.log4j.Logger;
-import testingsystem.dao.ConnectionPool;
+import testingsystem.dao.connectionpool.ConnectionPool;
 import testingsystem.dao.exception.DataBaseSqlRuntimeException;
-import testingsystem.dao.interfacepack.QuestionDao;
+import testingsystem.dao.QuestionDao;
 import testingsystem.entity.Answer;
 import testingsystem.entity.Question;
 
@@ -21,6 +21,7 @@ public class QuestionDaoImpl extends AbstractCrudDaoImpl<Question> implements Qu
     private static final String SAVE_QUERY = "INSERT INTO questions name=?";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM questions WHERE id=?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM questions";
+    private static final String FIND_ALL_BY_TEST_ID_QUERY = "SELECT questions.id, questions.question_text, answers.id, answers.answer_text, answers.is_correct FROM questions INNER JOIN answers ON answers.question_id = questions.id WHERE questions.test_id=?";
     private static final String COUNT_QUERY = "SELECT COUNT(*) FROM questions";
     private static final String UPDATE_QUERY = "UPDATE questions SET name=? WHERE id=?";
     private static final String FIND_ALL_ANSWERS_QUERY = "SELECT questions.id, questions.question_text, answers.id, answers.answer_text, answers.is_correct FROM questions INNER JOIN answers ON answers.question_id = questions.id WHERE questions.id=?";
@@ -41,37 +42,13 @@ public class QuestionDaoImpl extends AbstractCrudDaoImpl<Question> implements Qu
     }
 
     @Override
-    public List<Question> findAll() {
-        return super.findAll();
+    public List<Question> findAllByTestId(Long id) {
+        return findAllByParam(id, FIND_ALL_BY_TEST_ID_QUERY, LONG_PARAM_SETTER);
     }
 
     @Override
-    public Optional<Question> findById(Long id) {
-        try (final PreparedStatement preparedStatement =
-                     pool.getConnection().prepareStatement(FIND_ALL_ANSWERS_QUERY);) {
-
-            preparedStatement.setLong(1, id);
-            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
-                Question question = null;
-                List<Answer> answers = new ArrayList<Answer>();
-                while (resultSet.next()) {
-                    if (question == null) {
-                        question = new Question(resultSet.getLong("id"), resultSet.getString("question_text"), answers);
-                    }
-                    Answer answer = new Answer(resultSet.getString("answer_text"), resultSet.getBoolean("is_correct"));
-                    answers.add(answer);
-                }
-                return Optional.ofNullable(question);
-            }
-        } catch (SQLException e) {
-            LOGGER.warn(String.format(FIND_ALL_ANSWERS_QUERY + " failed", e));
-            throw new DataBaseSqlRuntimeException("No entries were found", e);
-        }
-    }
-
-    @Override
-    public long count() {
-        return super.count();
+    public Optional<Question> findById(Long id) throws DataBaseSqlRuntimeException {
+        return findByParam(id, FIND_ALL_ANSWERS_QUERY, LONG_PARAM_SETTER);
     }
 
     @Override
@@ -99,6 +76,16 @@ public class QuestionDaoImpl extends AbstractCrudDaoImpl<Question> implements Qu
 
     @Override
     protected Question mapResultSetToEntity(ResultSet resultSet) throws SQLException {
-        return new Question(resultSet.getLong("id"), resultSet.getString("question"));
+        Question question = null;
+        List<Answer> answers = new ArrayList<>();
+        while (resultSet.next()) {
+            if (question == null || question.getId() != resultSet.getLong("id")) {
+                System.out.println("sdfsdfsd");
+                question = new Question(resultSet.getLong("id"), resultSet.getString("question_text"), answers);
+            }
+            Answer answer = new Answer(resultSet.getString("answer_text"), resultSet.getBoolean("is_correct"));
+            answers.add(answer);
+        }
+        return question;
     }
 }

@@ -1,17 +1,15 @@
 package testingsystem.injector;
 
-import testingsystem.dao.ConnectionPool;
-import testingsystem.dao.HikariCPDataSource;
+import testingsystem.dao.connectionpool.ConnectionPool;
+import testingsystem.dao.connectionpool.HikariCPDataSource;
 import testingsystem.dao.impl.QuestionDaoImpl;
-import testingsystem.dao.impl.TopicDaoImpl;
 import testingsystem.dao.impl.UserDaoImpl;
-import testingsystem.dao.interfacepack.QuestionDao;
-import testingsystem.dao.interfacepack.TopicDao;
-import testingsystem.dao.interfacepack.UserDao;
+import testingsystem.dao.QuestionDao;
+import testingsystem.dao.UserDao;
 import testingsystem.entity.User;
-import testingsystem.service.PasswordEncryption;
+import testingsystem.service.encryptor.PasswordEncryption;
 import testingsystem.service.impl.UserServiceImpl;
-import testingsystem.service.interfacepack.UserService;
+import testingsystem.service.UserService;
 import testingsystem.service.validator.UserValidator;
 import testingsystem.service.validator.Validator;
 

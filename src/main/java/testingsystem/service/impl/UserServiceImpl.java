@@ -1,9 +1,9 @@
 package testingsystem.service.impl;
 
-import testingsystem.dao.interfacepack.UserDao;
+import testingsystem.dao.UserDao;
 import testingsystem.entity.User;
-import testingsystem.service.PasswordEncryption;
-import testingsystem.service.interfacepack.UserService;
+import testingsystem.service.encryptor.PasswordEncryption;
+import testingsystem.service.UserService;
 import testingsystem.service.validator.Validator;
 
 import java.util.List;

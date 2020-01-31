@@ -1,7 +1,8 @@
-package testingsystem.dao;
+package testingsystem.dao.connectionpool;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import testingsystem.dao.connectionpool.ConnectionPool;
 
 import java.sql.Connection;
 import java.sql.SQLException;

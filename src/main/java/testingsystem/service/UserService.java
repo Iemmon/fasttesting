@@ -1,4 +1,4 @@
-package testingsystem.service.interfacepack;
+package testingsystem.service;
 
 import testingsystem.dao.exception.DataBaseSqlRuntimeException;
 import testingsystem.entity.User;

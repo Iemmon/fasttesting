@@ -5,17 +5,12 @@ import java.util.List;
 public class Question {
     private Long id;
     private String question;
-    private List<Answer> multiChoice;
+    private List<Answer> listOfAnswers;
 
-    public Question(Long id, String question) {
+    public Question(Long id, String question, List<Answer> listOfAnswers) {
         this.id = id;
         this.question = question;
-    }
-
-    public Question(Long id, String question, List<Answer> multiChoice) {
-        this.id = id;
-        this.question = question;
-        this.multiChoice = multiChoice;
+        this.listOfAnswers = listOfAnswers;
     }
 
     public Long getId() {
@@ -27,6 +22,18 @@ public class Question {
     }
 
     public List<Answer> getMultiChoice() {
-        return multiChoice;
+        return listOfAnswers;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Answer a : listOfAnswers){
+            stringBuilder.append(a.toString());
+        }
+        return "Question{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                stringBuilder.toString();
     }
 }

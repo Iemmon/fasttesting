@@ -1,16 +1,14 @@
 package testingsystem.dao.impl;
 
 import org.apache.log4j.Logger;
-import testingsystem.dao.ConnectionPool;
+import testingsystem.dao.connectionpool.ConnectionPool;
 import testingsystem.dao.exception.DataBaseSqlRuntimeException;
-import testingsystem.dao.interfacepack.ResultDao;
+import testingsystem.dao.ResultDao;
 import testingsystem.entity.Result;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
 
 public class ResultDaoImpl extends AbstractCrudDaoImpl<Result> implements ResultDao {
     protected static final Logger LOGGER = Logger.getLogger(ResultDaoImpl.class);
@@ -35,31 +33,6 @@ public class ResultDaoImpl extends AbstractCrudDaoImpl<Result> implements Result
             LOGGER.warn(String.format(SAVE_QUERY + " failed", e));
             throw new DataBaseSqlRuntimeException("Result saving failed", e);
         }
-    }
-
-    @Override
-    public Optional<Result> findById(Long id) {
-        return super.findById(id);
-    }
-
-    @Override
-    public List<Result> findAll() {
-        return super.findAll();
-    }
-
-    @Override
-    public long count() {
-        return super.count();
-    }
-
-    @Override
-    public void update(Result entity) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        throw new UnsupportedOperationException();
     }
 
     @Override

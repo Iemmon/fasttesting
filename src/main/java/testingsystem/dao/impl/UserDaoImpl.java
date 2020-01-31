@@ -1,9 +1,9 @@
 package testingsystem.dao.impl;
 
 import org.apache.log4j.Logger;
-import testingsystem.dao.ConnectionPool;
+import testingsystem.dao.connectionpool.ConnectionPool;
 import testingsystem.dao.exception.DataBaseSqlRuntimeException;
-import testingsystem.dao.interfacepack.UserDao;
+import testingsystem.dao.UserDao;
 import testingsystem.dao.pagination.Page;
 import testingsystem.dao.pagination.PageRequest;
 import testingsystem.entity.Role;
@@ -47,16 +47,6 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        return super.findById(id);
-    }
-
-    @Override
-    public List<User> findAll() {
-        return super.findAll();
-    }
-
-    @Override
     public Page findAll(PageRequest pageRequest) {
         List<User> entities = new ArrayList<>();
         try (final PreparedStatement preparedStatement =
@@ -74,7 +64,6 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
             e.printStackTrace();
         }
         return new Page(entities, pageRequest.getPageNumber(), pageRequest.getItemsPerPage(), count() / pageRequest.getItemsPerPage());
-
     }
 
     @Override
@@ -89,11 +78,6 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
             LOGGER.warn(String.format(SAVE_QUERY + " failed", e));
             throw new DataBaseSqlRuntimeException("User was not saved", e);
         }
-    }
-
-    @Override
-    public long count() {
-        return super.count();
     }
 
     @Override

@@ -1,8 +1,8 @@
 package testingsystem.dao.impl;
 
 import org.apache.log4j.Logger;
-import testingsystem.dao.ConnectionPool;
-import testingsystem.dao.interfacepack.CrudDao;
+import testingsystem.dao.connectionpool.ConnectionPool;
+import testingsystem.dao.CrudDao;
 import testingsystem.dao.exception.DataBaseSqlRuntimeException;
 
 import java.sql.PreparedStatement;
@@ -91,6 +91,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
             List<E> entities = new ArrayList<>();
             while (resultSet.next()) {
                 final E optionalEntity = mapResultSetToEntity(resultSet);
+                System.out.println("123123");
                 entities.add(optionalEntity);
             }
             return entities;

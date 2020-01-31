@@ -1,4 +1,4 @@
-package testingsystem.dao.interfacepack;
+package testingsystem.dao;
 
 import testingsystem.entity.Result;
 

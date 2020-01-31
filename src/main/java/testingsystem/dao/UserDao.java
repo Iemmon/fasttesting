@@ -1,4 +1,4 @@
-package testingsystem.dao.interfacepack;
+package testingsystem.dao;
 
 import testingsystem.dao.exception.DataBaseSqlRuntimeException;
 import testingsystem.dao.pagination.Page;

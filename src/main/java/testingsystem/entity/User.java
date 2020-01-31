@@ -1,7 +1,6 @@
 package testingsystem.entity;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -10,7 +9,6 @@ public class User {
     private String email;
     private String password;
     private final String salt;
-    private List<Result> listOfResults;
     private double averageMark;
     private Role role;
 
@@ -40,10 +38,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Result> getListOfResults() {
-        return listOfResults;
     }
 
     public String getPassword() {
@@ -83,15 +77,12 @@ public class User {
         private String email;
         private String password;
         private String salt;
-        private List<Result> listOfResults;
         private double averageMark;
         private Role role;
 
         public User build() {
             return new User(this);
         }
-
-
 
         public Builder withId(Long id) {
             this.id = id;
@@ -110,10 +101,6 @@ public class User {
 
         public Builder withSalt(String salt){
             this.salt = salt;
-            return this;
-        }
-        public Builder withResults(List<Result> listOfResults){
-            this.listOfResults = listOfResults;
             return this;
         }
 

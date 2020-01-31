@@ -1,15 +1,13 @@
 package testingsystem.dao.impl;
 
-import testingsystem.dao.ConnectionPool;
+import testingsystem.dao.connectionpool.ConnectionPool;
 import testingsystem.dao.exception.DataBaseSqlRuntimeException;
-import testingsystem.dao.interfacepack.TopicDao;
+import testingsystem.dao.TopicDao;
 import testingsystem.entity.Topic;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 public class TopicDaoImpl extends AbstractCrudDaoImpl<Topic> implements TopicDao {
@@ -36,21 +34,6 @@ public class TopicDaoImpl extends AbstractCrudDaoImpl<Topic> implements TopicDao
             LOGGER.warn(String.format(SAVE_QUERY + " failed", e));
             throw new DataBaseSqlRuntimeException("Topic saving failed", e);
         }
-    }
-
-    @Override
-    public Optional<Topic> findById(Long id) {
-        return super.findById(id);
-    }
-
-    @Override
-    public List<Topic> findAll() {
-        return super.findAll();
-    }
-
-    @Override
-    public long count() {
-        return super.count();
     }
 
     @Override

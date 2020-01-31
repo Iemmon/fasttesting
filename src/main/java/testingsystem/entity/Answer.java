@@ -1,8 +1,8 @@
 package testingsystem.entity;
 
 public class Answer {
-    String answerOption;
-    boolean isCorrect;
+    private String answerOption;
+    private boolean isCorrect;
 
     public Answer(String answerOption, boolean isCorrect) {
         this.answerOption = answerOption;
@@ -15,5 +15,10 @@ public class Answer {
 
     public boolean isCorrect() {
         return isCorrect;
+    }
+
+    @Override
+    public String toString() {
+        return "\n" + answerOption;
     }
 }
