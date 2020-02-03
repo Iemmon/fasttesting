@@ -23,19 +23,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean login(String email, String password) {
+    public Optional<User> login(String email, String password) {
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent()) {
             String encryptPassword = passwordEncryption.encrypt(password, user.get().getSalt());
-            System.out.println("db pass " + user.get().getPassword());
-            System.out.println("encrypted " + encryptPassword);
-            return user.get().getPassword().contentEquals(encryptPassword);
+            if(user.get().getPassword().contentEquals(encryptPassword)){
+                return user;
+            }
         }
-        return false;
+        return Optional.empty();
     }
 
     @Override
-    public Optional<Object> register(User user) {
+    public Optional<User> register(User user) {
         if (userValidator.validate(user) && !userRepository.findByEmail(user.getEmail()).isPresent()) {
             String encryptPassword = passwordEncryption.encrypt(user.getPassword(), user.getSalt());
             user.setPassword(encryptPassword);

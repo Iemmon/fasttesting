@@ -9,11 +9,10 @@ import testingsystem.injector.ApplicationInjector;
 import testingsystem.service.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 public class App {
 
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
         UserService userService = ApplicationInjector.getUserService();
         User user = User.builder()
                 .withEmail("hrbfosd@gmail.com")
@@ -31,7 +30,7 @@ public class App {
         System.out.println("count "+ ApplicationInjector.USER_DAO.count());
         System.out.println("max page number " + page.getMaxPageNumber());
         System.out.println(userService.login("hrbfosd@gmail.com", "Re1iab1ePa$$"));
-       Optional<Question> question = ApplicationInjector.QUESTION_DAO.findById(1L);
+       //Optional<Question> question = ApplicationInjector.QUESTION_DAO.findById(1L);
         List<Question> listOfQuestions = ApplicationInjector.QUESTION_DAO.findAllByTestId(1L);
 
         for(Question q : listOfQuestions){
@@ -41,5 +40,7 @@ public class App {
 //        System.out.println(question.get().getMultiChoice().get(0).getAnswerOption());
 //        System.out.println(question.get().getMultiChoice().get(0).isCorrect());
     }
+*/
+
 }
 

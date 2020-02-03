@@ -91,7 +91,6 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
             List<E> entities = new ArrayList<>();
             while (resultSet.next()) {
                 final E optionalEntity = mapResultSetToEntity(resultSet);
-                System.out.println("123123");
                 entities.add(optionalEntity);
             }
             return entities;

@@ -6,7 +6,5 @@ import java.util.List;
 
 public interface TestService {
 
-    Test get(Long id);
-
-    List<Test> getAll();
+    List<Test> findAllByTopicId(Long id);
 }

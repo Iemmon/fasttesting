@@ -13,6 +13,11 @@ public class Question {
         this.listOfAnswers = listOfAnswers;
     }
 
+    public Question(Long id, String question){
+        this.id = id;
+        this.question = question;
+    }
+
     public Long getId() {
         return id;
     }
@@ -21,7 +26,7 @@ public class Question {
         return question;
     }
 
-    public List<Answer> getMultiChoice() {
+    public List<Answer> getListOfAnswers() {
         return listOfAnswers;
     }
 

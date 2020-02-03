@@ -1,14 +1,20 @@
 package testingsystem.service.impl;
 
-import testingsystem.dao.impl.TopicDaoImpl;
+import testingsystem.dao.TopicDao;
 import testingsystem.entity.Topic;
 import testingsystem.service.TopicService;
 
+import java.util.List;
+
 public class TopicServiceImpl implements TopicService {
-    TopicDaoImpl topicRepository;
+    private final TopicDao topicRepository;
+
+    public TopicServiceImpl(TopicDao topicDao) {
+        this.topicRepository = topicDao;
+    }
 
     @Override
-    public Topic get(Long id) {
-        return null;
+    public List<Topic> findAll() {
+        return topicRepository.findAll();
     }
 }

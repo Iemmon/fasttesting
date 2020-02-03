@@ -21,10 +21,10 @@ public class QuestionDaoImpl extends AbstractCrudDaoImpl<Question> implements Qu
     private static final String SAVE_QUERY = "INSERT INTO questions name=?";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM questions WHERE id=?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM questions";
-    private static final String FIND_ALL_BY_TEST_ID_QUERY = "SELECT questions.id, questions.question_text, answers.id, answers.answer_text, answers.is_correct FROM questions INNER JOIN answers ON answers.question_id = questions.id WHERE questions.test_id=?";
+    private static final String FIND_ALL_BY_TEST_ID_QUERY = "SELECT questions.id, questions.question_text, answers.id as answer_id, answers.answer_text, answers.is_correct FROM questions INNER JOIN answers ON answers.question_id = questions.id WHERE questions.test_id=?";
     private static final String COUNT_QUERY = "SELECT COUNT(*) FROM questions";
     private static final String UPDATE_QUERY = "UPDATE questions SET name=? WHERE id=?";
-    private static final String FIND_ALL_ANSWERS_QUERY = "SELECT questions.id, questions.question_text, answers.id, answers.answer_text, answers.is_correct FROM questions INNER JOIN answers ON answers.question_id = questions.id WHERE questions.id=?";
+    private static final String FIND_ALL_ANSWERS_QUERY = "SELECT questions.id, questions.question_text, answers.id as answer_id, answers.answer_text, answers.is_correct FROM questions INNER JOIN answers ON answers.question_id = questions.id WHERE questions.id=?";
 
     public QuestionDaoImpl(ConnectionPool pool) {
         super(pool, FIND_BY_ID_QUERY, FIND_ALL_QUERY, COUNT_QUERY);
@@ -76,12 +76,14 @@ public class QuestionDaoImpl extends AbstractCrudDaoImpl<Question> implements Qu
 
     @Override
     protected Question mapResultSetToEntity(ResultSet resultSet) throws SQLException {
-        Question question = null;
         List<Answer> answers = new ArrayList<>();
+        long currentQuestId = resultSet.getLong("id");
+        Question question = new Question(resultSet.getLong("id"), resultSet.getString("question_text"), answers);
+        resultSet.previous();
         while (resultSet.next()) {
-            if (question == null || question.getId() != resultSet.getLong("id")) {
-                System.out.println("sdfsdfsd");
-                question = new Question(resultSet.getLong("id"), resultSet.getString("question_text"), answers);
+            if(resultSet.getLong("id") != currentQuestId){
+                resultSet.previous();
+                break;
             }
             Answer answer = new Answer(resultSet.getString("answer_text"), resultSet.getBoolean("is_correct"));
             answers.add(answer);

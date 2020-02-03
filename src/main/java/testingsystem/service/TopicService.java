@@ -2,6 +2,8 @@ package testingsystem.service;
 
 import testingsystem.entity.Topic;
 
+import java.util.List;
+
 public interface TopicService {
-    Topic get(Long id);
+    List<Topic> findAll();
 }

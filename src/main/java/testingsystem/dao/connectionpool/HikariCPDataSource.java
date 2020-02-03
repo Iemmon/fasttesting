@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 
 public class HikariCPDataSource implements ConnectionPool {
 
-    private static HikariConfig config = new HikariConfig();
+        private static HikariConfig config = new HikariConfig();
     private static HikariDataSource ds;
     private static ResourceBundle resource = PropertyResourceBundle.getBundle("properties");
 
@@ -19,6 +19,7 @@ public class HikariCPDataSource implements ConnectionPool {
         config.setJdbcUrl(resource.getString("link"));
         config.setUsername(resource.getString("user"));
         config.setPassword(resource.getString("password"));
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         config.addDataSourceProperty("cachePrepStmts", resource.getString("cachePrepStmts"));
         config.addDataSourceProperty("prepStmtCacheSize", resource.getString("prepStmtCacheSize"));
         config.addDataSourceProperty("prepStmtCacheSqlLimit", resource.getString("prepStmtCacheSqlLimit"));
