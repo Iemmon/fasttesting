@@ -15,6 +15,10 @@ INSERT INTO users(id, email, password, role) VALUES (14, 'oifvrknu@gmail.com', '
 INSERT INTO users(id, email, password, role) VALUES (15, 'wuxfklkfc@games.com', 'nvkrhfakR29', 'STUDENT');
 INSERT INTO users(id, email, password, role) VALUES (16, 'uyweocnzmz@ygm.com', 'fsbfc7SST', 'STUDENT');
 
+
+INSERT INTO results(id, score, user_id, test_id) VALUES (1, 60, 1, 1);
+INSERT INTO results(id, score, user_id, test_id) VALUES (2, 80, 1, 1);
+
 INSERT INTO topics(id, name) VALUES (1, 'JAVA');
 INSERT INTO topics(id, name) VALUES (2, 'SQL');
 
@@ -36,19 +40,3 @@ INSERT INTO answers(id, answer_text, is_correct, question_id) VALUES (6, 'To cre
 INSERT INTO answers(id, answer_text, is_correct, question_id) VALUES (7, 'Inheritance', 1,  3);
 INSERT INTO answers(id, answer_text, is_correct, question_id) VALUES (8, 'Polymorphism', 0,  3);
 INSERT INTO answers(id, answer_text, is_correct, question_id) VALUES (9, 'Encapsulation', 0,  3);
-
-INSERT INTO results(id, score, test_id, user_id) VALUES (1, 10, 1, 2);
-INSERT INTO results(id, score, test_id, user_id) VALUES (2, 9, 1, 4);
-INSERT INTO results(id, score, test_id, user_id) VALUES (3, 6, 1, 5);
-INSERT INTO results(id, score, test_id, user_id) VALUES (4, 2, 1, 6);
-INSERT INTO results(id, score, test_id, user_id) VALUES (5, 8, 1, 7);
-INSERT INTO results(id, score, test_id, user_id) VALUES (6, 4, 1, 8);
-INSERT INTO results(id, score, test_id, user_id) VALUES (7, 6, 1, 9);
-INSERT INTO results(id, score, test_id, user_id) VALUES (8, 10, 1, 10);
-INSERT INTO results(id, score, test_id, user_id) VALUES (9, 8, 1, 11);
-INSERT INTO results(id, score, test_id, user_id) VALUES (10, 5, 1, 12);
-INSERT INTO results(id, score, test_id, user_id) VALUES (12, 8, 1, 13);
-INSERT INTO results(id, score, test_id, user_id) VALUES (13, 9, 1, 14);
-INSERT INTO results(id, score, test_id, user_id) VALUES (14, 10, 1, 15);
-INSERT INTO results(id, score, test_id, user_id) VALUES (15, 10, 1, 16);
-

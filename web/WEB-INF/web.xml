@@ -5,7 +5,7 @@
          version="4.0">
     <servlet>
         <servlet-name>userServlet</servlet-name>
-        <servlet-class>testingsystem.controller.UserServlet</servlet-class>
+        <servlet-class>quizsystem.servlet.UserServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>userServlet</servlet-name>
@@ -14,7 +14,7 @@
 
     <servlet>
         <servlet-name>registerServlet</servlet-name>
-        <servlet-class>testingsystem.controller.RegisterServlet</servlet-class>
+        <servlet-class>quizsystem.servlet.RegisterServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>registerServlet</servlet-name>
@@ -23,7 +23,7 @@
 
     <servlet>
         <servlet-name>loginServlet</servlet-name>
-        <servlet-class>testingsystem.controller.LoginServlet</servlet-class>
+        <servlet-class>quizsystem.servlet.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
@@ -31,7 +31,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>topicServlet</servlet-name>
-        <servlet-class>testingsystem.controller.TopicServlet</servlet-class>
+        <servlet-class>quizsystem.servlet.TopicServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>topicServlet</servlet-name>
@@ -39,7 +39,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>testServlet</servlet-name>
-        <servlet-class>testingsystem.controller.TestServlet</servlet-class>
+        <servlet-class>quizsystem.servlet.TestServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>testServlet</servlet-name>
@@ -47,7 +47,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>questionServlet</servlet-name>
-        <servlet-class>testingsystem.controller.QuestionServlet</servlet-class>
+        <servlet-class>quizsystem.servlet.QuestionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>questionServlet</servlet-name>
@@ -55,7 +55,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>loginFilter</filter-name>
-        <filter-class>testingsystem.controller.LoginFilter</filter-class>
+        <filter-class>quizsystem.servlet.LoginFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>loginFilter</filter-name>

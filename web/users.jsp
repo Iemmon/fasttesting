@@ -5,10 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-${users.size()}
-
 <table>
-
+    <tr>
+        <th>USER ID</th>
+        <th>USER EMAIL</th>
+    </tr>
 <jsp:useBean id="users" scope="request" type="java.util.List"/>
 <c:forEach var="user" items="${users}">
     <tr>
@@ -16,7 +17,12 @@ ${users.size()}
         <td>${user.getEmail()}</td>
     </tr>
 </c:forEach>
-
+</table>
+    <tr>
+        <c:forEach begin="1" end="${maxPages}" var="i">
+                    <td><a href="user?page=${i}">${i}</a></td>
+        </c:forEach>
+    </tr>
 </table>
 </body>
 </html>
