@@ -33,7 +33,7 @@ public class UserDao {
 
     @Test
     public void testFindAllUsersWithPagination(){
-        Page page = userDaoObject.findAll(new PageRequest(2, 5));
+        Page page = userDaoObject.findAll(new PageRequest(2, 5, 16));
         assertEquals(2, page.getPageNumber());
         assertEquals(5, page.getItemsPerPage());
         assertEquals(4, page.getMaxPageNumber());

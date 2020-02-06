@@ -54,7 +54,7 @@ public class QuestionDaoImpl extends AbstractCrudDaoImpl<Question> implements Qu
                 resultSet.previous();
                 break;
             }
-            Answer answer = new Answer(resultSet.getString("answer_text"), resultSet.getBoolean("is_correct"));
+            Answer answer = new Answer(resultSet.getLong("answer_id"), resultSet.getString("answer_text"), resultSet.getBoolean("is_correct"));
             answers.add(answer);
         }
         return question;

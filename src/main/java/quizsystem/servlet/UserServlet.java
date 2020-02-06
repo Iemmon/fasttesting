@@ -1,7 +1,6 @@
 package quizsystem.servlet;
 
 import quizsystem.dao.pagination.Page;
-import quizsystem.dao.pagination.PageRequest;
 import quizsystem.entity.User;
 import quizsystem.injector.ApplicationInjector;
 import quizsystem.service.UserService;
@@ -27,16 +26,16 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        int page = Integer.parseInt(resourceBundle.getString("defaultPageNumber"));
+//        int page = Integer.parseInt(resourceBundle.getString("defaultPageNumber"));
         int itemsPerPage = Integer.parseInt(resourceBundle.getString("itemsPerPage"));
+//
+//        if(req.getParameter("page") != null && req.getParameter("page").matches("(\\-)?[0-9]+")){
+//            page = Integer.parseInt(req.getParameter("page"));
+//        }
 
-        if(req.getParameter("page") != null && req.getParameter("page").matches("(\\-)?[0-9]+")){
-            page = Integer.parseInt(req.getParameter("page"));
-        }
-
-        Page<User> users = userService.findAll(new PageRequest(page, itemsPerPage));
+        Page<User> users = userService.findAll(resourceBundle.getString("defaultPageNumber"), itemsPerPage);
         req.setAttribute("users", users.getItems());
-        req.setAttribute("page", page);
+        req.setAttribute("page", users.getPageNumber());
         req.setAttribute("maxPages", users.getMaxPageNumber());
 
         req.getRequestDispatcher("users.jsp").forward(req, resp);

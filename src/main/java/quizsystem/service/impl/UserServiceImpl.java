@@ -3,6 +3,7 @@ package quizsystem.service.impl;
 import quizsystem.dao.UserDao;
 import quizsystem.dao.pagination.Page;
 import quizsystem.dao.pagination.PageRequest;
+import quizsystem.dao.pagination.PageRequestParser;
 import quizsystem.entity.Role;
 import quizsystem.entity.User;
 import quizsystem.service.UserService;
@@ -54,7 +55,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> findAll(PageRequest pageRequest) {
+    public Page<User> findAll(String page, int itemsPerPage) {
+        PageRequest pageRequest = PageRequestParser.parseIntoPageRequest(page, itemsPerPage, userRepository.count());
         return userRepository.findAll(pageRequest);
     }
 }

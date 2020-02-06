@@ -55,7 +55,7 @@
     </servlet-mapping>
     <filter>
         <filter-name>loginFilter</filter-name>
-        <filter-class>quizsystem.servlet.LoginFilter</filter-class>
+        <filter-class>quizsystem.servlet.filter.LoginFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>loginFilter</filter-name>

@@ -13,6 +13,10 @@ public class ResultServiceImpl implements ResultService {
         this.resultDao = resultDao;
     }
 
+    public void saveResult(Result result){
+        resultDao.save(result);
+    }
+
     @Override
     public List<Result> getAllResults(Long user) {
         return resultDao.findAllByUserId(user);

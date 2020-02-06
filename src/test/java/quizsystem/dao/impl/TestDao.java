@@ -28,5 +28,4 @@ public class TestDao {
         List<quizsystem.entity.Test> tests = testDaoObject.findAllByTopicId(1L);
         assertEquals(2, tests.size());
     }
-
 }

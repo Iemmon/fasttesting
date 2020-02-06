@@ -1,4 +1,4 @@
-package quizsystem.servlet;
+package quizsystem.servlet.filter;
 
 import quizsystem.entity.Role;
 import quizsystem.entity.User;
@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Optional;
 
 public class LoginFilter implements Filter {
 
@@ -23,11 +22,9 @@ public class LoginFilter implements Filter {
         User user = (User) session.getAttribute("currentUser");
         if(user == null || !user.getRole().equals(Role.STUDENT)){
             ((HttpServletResponse) servletResponse).sendRedirect(request.getContextPath() + "/login");
-            return;
-//            servletRequest.getRequestDispatcher("/login").forward(servletRequest, servletResponse);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
-            return;
         }
+        return;
     }
 }

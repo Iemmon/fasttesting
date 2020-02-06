@@ -1,25 +1,13 @@
 package quizsystem.injector;
 
-import quizsystem.dao.TestDao;
-import quizsystem.dao.TopicDao;
+import quizsystem.dao.*;
 import quizsystem.dao.connectionpool.ConnectionPool;
 import quizsystem.dao.connectionpool.HikariCPDataSource;
-import quizsystem.dao.impl.QuestionDaoImpl;
-import quizsystem.dao.impl.TestDaoImpl;
-import quizsystem.dao.impl.TopicDaoImpl;
-import quizsystem.dao.impl.UserDaoImpl;
-import quizsystem.dao.QuestionDao;
-import quizsystem.dao.UserDao;
+import quizsystem.dao.impl.*;
 import quizsystem.entity.User;
-import quizsystem.service.QuestionService;
-import quizsystem.service.TestService;
-import quizsystem.service.TopicService;
+import quizsystem.service.*;
 import quizsystem.service.encryptor.PasswordEncryption;
-import quizsystem.service.impl.QuestionServiceImpl;
-import quizsystem.service.impl.TestServiceImpl;
-import quizsystem.service.impl.TopicServiceImpl;
-import quizsystem.service.impl.UserServiceImpl;
-import quizsystem.service.UserService;
+import quizsystem.service.impl.*;
 import quizsystem.service.validator.UserValidator;
 import quizsystem.service.validator.Validator;
 
@@ -46,6 +34,8 @@ public class ApplicationInjector {
 
     private static final QuestionDao QUESTION_DAO = new QuestionDaoImpl(DATA_SOURCE);
 
+    private static final ResultDao RESULT_DAO = new ResultDaoImpl(DATA_SOURCE);
+
     private static final UserService USER_SERVICE = new UserServiceImpl(USER_DAO, PASSWORD_ENCRYPTION, USER_VALIDATOR);
 
     private static final TopicService TOPIC_SERVICE = new TopicServiceImpl(TOPIC_DAO);
@@ -53,6 +43,8 @@ public class ApplicationInjector {
     private static final TestService TEST_SERVICE = new TestServiceImpl(TEST_DAO);
 
     private static final QuestionService QUESTION_SERVICE = new QuestionServiceImpl(QUESTION_DAO);
+
+    private static final ResultService RESULT_SERVICE = new ResultServiceImpl(RESULT_DAO);
 
     private ApplicationInjector() {
     }
@@ -79,5 +71,9 @@ public class ApplicationInjector {
 
     public ResourceBundle getResourceBundle() {
         return RESOURCE_FILE;
+    }
+
+    public ResultService getResultService(){
+        return RESULT_SERVICE;
     }
 }

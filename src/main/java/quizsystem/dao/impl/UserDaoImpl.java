@@ -47,16 +47,16 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
 
     @Override
     public Page findAll(PageRequest pageRequest) {
-        long maxUsers = super.count();
-        int maxPage = (int) (maxUsers < pageRequest.getItemsPerPage() ? 1 : Math.ceil((double) maxUsers / pageRequest.getItemsPerPage()));
-        int pageNumber = Math.max(1, pageRequest.getPageNumber());
-        pageNumber = Math.min(maxPage, pageNumber);
+//        long maxUsers = super.count();
+//        int maxPage = (int) (maxUsers < pageRequest.getItemsPerPage() ? 1 : Math.ceil((double) maxUsers / pageRequest.getItemsPerPage()));
+//        int pageNumber = Math.max(1, pageRequest.getPageNumber());
+//        pageNumber = Math.min(maxPage, pageNumber);
 
         List<User> entities = new ArrayList<>();
         try (final PreparedStatement preparedStatement =
                      pool.getConnection().prepareStatement(FIND_WITH_PAGINATION_QUERY)) {
             preparedStatement.setInt(1, pageRequest.getItemsPerPage());
-            preparedStatement.setInt(2, (pageNumber - 1) * pageRequest.getItemsPerPage());
+            preparedStatement.setInt(2, (pageRequest.getPageNumber() - 1) * pageRequest.getItemsPerPage());
 
             try (final ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -68,12 +68,12 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new Page(entities, pageNumber, pageRequest.getItemsPerPage(), maxPage);
+        return new Page(entities, pageRequest.getPageNumber(), pageRequest.getItemsPerPage(), pageRequest.getMaxPages());
     }
 
     @Override
     public User save(User entity) {
-        try (final PreparedStatement preparedStatement = pool.getConnection().prepareStatement(SAVE_QUERY, Statement.RETURN_GENERATED_KEYS);) {
+        try (final PreparedStatement preparedStatement = pool.getConnection().prepareStatement(SAVE_QUERY, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, entity.getEmail());
             preparedStatement.setString(2, entity.getPassword());
             preparedStatement.setString(3, entity.getRole().toString());

@@ -12,5 +12,5 @@ public interface UserService {
 
     Optional<User> register(String email, String password) throws DataBaseSqlRuntimeException;
 
-    Page<User> findAll(PageRequest pageRequest);
+    Page<User> findAll(String page, int itemsPerPage);
 }
