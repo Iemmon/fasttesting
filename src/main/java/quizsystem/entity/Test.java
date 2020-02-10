@@ -8,6 +8,9 @@ public class Test {
         this.id = id;
         this.name = name;
     }
+    public Test(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

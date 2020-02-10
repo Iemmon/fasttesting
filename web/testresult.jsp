@@ -3,9 +3,11 @@
 <html>
 <head>
     <title>Test Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-<form method="post" action="testresult">
+<form method="post" action="${pageContext.servletContext.contextPath}/">
     <jsp:useBean id="test_results" scope="request" type="java.util.List"/>
     <jsp:useBean id="ans" scope="request" type="java.util.Set"/>
     <c:forEach var="question" items="${test_results}">

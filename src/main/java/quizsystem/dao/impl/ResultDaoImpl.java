@@ -5,6 +5,7 @@ import quizsystem.dao.ResultDao;
 import quizsystem.dao.connectionpool.ConnectionPool;
 import quizsystem.dao.exception.DataBaseSqlRuntimeException;
 import quizsystem.entity.Result;
+import quizsystem.entity.Test;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +19,8 @@ public class ResultDaoImpl extends AbstractCrudDaoImpl<Result> implements Result
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM results WHERE id=?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM results";
     private static final String COUNT_QUERY = "SELECT COUNT(*) FROM results";
-    private static final String FIND_ALL_BY_USER_ID_QUERY = "SELECT * FROM results WHERE user_id=?";
+    private static final String FIND_ALL_BY_USER_ID_QUERY = "SELECT * FROM results LEFT JOIN tests ON test_id=tests.id WHERE user_id=?";
+//    private static final String FIND_REUSLT_BY_TEST_ID = "SELECT * FROM results LEFT JOIN tests ON test_id=tests.id";
 
     public ResultDaoImpl(ConnectionPool pool) {
         super(pool, FIND_BY_ID_QUERY, FIND_ALL_QUERY, COUNT_QUERY);
@@ -27,7 +29,7 @@ public class ResultDaoImpl extends AbstractCrudDaoImpl<Result> implements Result
     @Override
     public Result save(Result entity) {
         try (final PreparedStatement preparedStatement = pool.getConnection().prepareStatement(SAVE_QUERY)) {
-            preparedStatement.setLong(1, entity.getTestId());
+            preparedStatement.setLong(1, entity.getTest().getId());
             preparedStatement.setInt(2, entity.getScore());
             preparedStatement.setLong(3, entity.getUserId());
             preparedStatement.executeUpdate();
@@ -45,6 +47,7 @@ public class ResultDaoImpl extends AbstractCrudDaoImpl<Result> implements Result
 
     @Override
     protected Result mapResultSetToEntity(ResultSet resultSet) throws SQLException {
-        return new Result(resultSet.getLong("id"), resultSet.getInt("score"), resultSet.getLong("test_id"), resultSet.getLong("user_id"));
+        Test test = new Test(resultSet.getLong("test_id"), resultSet.getString("name"));
+        return new Result(resultSet.getLong("id"), resultSet.getInt("score"), test, resultSet.getLong("user_id"));
     }
 }

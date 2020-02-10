@@ -1,5 +1,6 @@
 package quizsystem.servlet.filter;
 
+import quizsystem.entity.Role;
 import quizsystem.entity.User;
 
 import javax.servlet.*;
@@ -8,23 +9,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class LoginFilter implements Filter {
+public class UsersFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
         String command = request.getParameter("command");
-        if (command != null && (command.contentEquals("login") || command.contentEquals("register") || command.contentEquals("processlogin"))) {
+        User user = (User)session.getAttribute("currentUser");
+        if(command.contentEquals("users") && user.getRole().equals(Role.ADMIN)){
             filterChain.doFilter(servletRequest, servletResponse);
             return;
-        }
-        User user = (User) session.getAttribute("currentUser");
-        if (user == null) {
-            ((HttpServletResponse) servletResponse).sendRedirect(request.getContextPath() + "/?command=login");
         } else {
-            filterChain.doFilter(servletRequest, servletResponse);
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
-        return;
     }
 }

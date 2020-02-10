@@ -1,4 +1,4 @@
-package quizsystem;
+package quizsystem.service;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -7,13 +7,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
-public class App {
-    public static void main(String[] args) throws IOException {
+public class MailSender {
+
+    public void sendMail(String email, String topic) throws IOException {
         final String username = "quizmail@yahoo.com";
         final String password = "reliablepassword";
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("mail");
         File file = new File("mail.properties");
         FileInputStream fileInput = new FileInputStream(file);
         Properties properties = new Properties();
@@ -32,7 +31,7 @@ public class App {
                     Message.RecipientType.TO,
                     InternetAddress.parse("to_username_a@gmail.com"));
 
-            message.setSubject("Testing Gmail TLS");
+            message.setSubject("TEST RESULT");
             message.setText("Dear Mail Crawler,"
                     + "\n\n Please do not spam my email!");
 
@@ -45,4 +44,3 @@ public class App {
         }
     }
 }
-

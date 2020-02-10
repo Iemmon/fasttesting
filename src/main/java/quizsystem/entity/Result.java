@@ -2,20 +2,20 @@ package quizsystem.entity;
 
 public class Result {
     private Long id;
-    private Long testId;
+    private Test test;
     private Long userId;
     private Integer score;
 
-    public Result(Long resultId, Integer score, Long testId, Long userId) {
+    public Result(Long resultId, Integer score, Test test, Long userId) {
         this.id = resultId;
         this.score = score;
-        this.testId = testId;
+        this.test = test;
         this.userId = userId;
     }
 
-    public Result(Integer score, Long testId, Long userId){
+    public Result(Integer score, Test test, Long userId){
         this.score = score;
-        this.testId = testId;
+        this.test = test;
         this.userId = userId;
     }
 
@@ -23,8 +23,8 @@ public class Result {
         return id;
     }
 
-    public Long getTestId() {
-        return testId;
+    public Test getTest() {
+        return test;
     }
 
     public Integer getScore() {

@@ -7,7 +7,7 @@
 <fmt:setBundle basename="localization"/>
 <html>
 <head>
-    <title>Login</title>
+    <title>Results</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
@@ -23,38 +23,21 @@
             </form>
         </div>
     </div>
-
-    <c:if test="${has_error != null}">
-        <div class="row">
-            <div class="col-2 offset-3">
-                <p><fmt:message key="login-error"/></p>
-            </div>
-        </div>
-    </c:if>
-
-    <form method="post" action="${pageContext.servletContext.contextPath}/">
-        <input type="hidden" name="command" value="processlogin">
-        <div class="row">
-            <div class="col-2 offset-5">
-                <input type="text" name="email" required
-                       pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9]+[\.][a-z]+$" placeholder="<fmt:message key="email"/>"/>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-2 offset-5">
-                <input type="password" name="pass" required placeholder="<fmt:message key="pass"/>"/><br/>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-2 offset-5">
-                <input type="submit" class="btn btn-info"/>
-                <a href="?command=register"><fmt:message key="register"/></a>
-            </div>
-        </div>
-    </form>
+    <table>
+        <tr>
+            <th><fmt:message key="test-name"/></th>
+            <th><fmt:message key="score"/></th>
+        </tr>
+        <jsp:useBean id="results" scope="request" type="java.util.List"/>
+        <c:forEach var="result" items="${results}">
+            <tr>
+                <td>${result.getId()}</td>
+                <td>${result.getTest().getName()}</td>
+                <td>${result.getScore()}</td>
+            </tr>
+        </c:forEach>
+    </table>
 </div>
-</div>
-</div>
+
 </body>
 </html>

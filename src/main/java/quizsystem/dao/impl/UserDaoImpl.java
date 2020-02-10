@@ -47,11 +47,6 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
 
     @Override
     public Page findAll(PageRequest pageRequest) {
-//        long maxUsers = super.count();
-//        int maxPage = (int) (maxUsers < pageRequest.getItemsPerPage() ? 1 : Math.ceil((double) maxUsers / pageRequest.getItemsPerPage()));
-//        int pageNumber = Math.max(1, pageRequest.getPageNumber());
-//        pageNumber = Math.min(maxPage, pageNumber);
-
         List<User> entities = new ArrayList<>();
         try (final PreparedStatement preparedStatement =
                      pool.getConnection().prepareStatement(FIND_WITH_PAGINATION_QUERY)) {

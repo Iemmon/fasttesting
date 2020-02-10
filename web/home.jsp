@@ -6,7 +6,7 @@
 <fmt:setBundle basename="localization"/>
 <html>
 <head>
-    <title>Tests</title>
+    <title>Home</title>
 </head>
 <body>
 <form>
@@ -15,13 +15,8 @@
         <option value="ru" ${language == 'ru' ? 'selected' : ''}><fmt:message key="ru"/></option>
     </select>
 </form>
-<p><fmt:message key="choose-test"/></p>
-<jsp:useBean id="tests" scope="request" type="java.util.List"/>
-<c:forEach var="test" items="${tests}">
-    <tr>
-        <td>${test.getId()}</td>
-        <td><a href="?command=questions&test_id=${test.getId()}">${test.getName()}</a></td><br />
-    </tr>
-</c:forEach>
+<a href="?command=results"> Results </a><br />
+<a href="?command=topics">  Take a test</a><br />
+<a href="?command=logout"> Logout </a>
 </body>
 </html>

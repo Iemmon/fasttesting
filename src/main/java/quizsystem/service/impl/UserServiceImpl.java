@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> findAll(String page, int itemsPerPage) {
-        PageRequest pageRequest = PageRequestParser.parseIntoPageRequest(page, itemsPerPage, userRepository.count());
+        PageRequest pageRequest = PageRequestParser.parseIntoPageRequest(page, userRepository.count());
         return userRepository.findAll(pageRequest);
     }
 }

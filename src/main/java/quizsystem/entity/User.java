@@ -1,8 +1,9 @@
 package quizsystem.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
     private final Long userId;
     private final String email;
     private final String password;
