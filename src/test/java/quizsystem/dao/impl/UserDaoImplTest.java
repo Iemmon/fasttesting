@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
 
 import static org.junit.Assert.assertEquals;
 
-public class UserDao {
+public class UserDaoImplTest {
 
     Class<ApplicationInjector> injectorClass;
     Field userDao;
@@ -36,7 +36,7 @@ public class UserDao {
         Page page = userDaoObject.findAll(new PageRequest(2, 5, 16));
         assertEquals(2, page.getPageNumber());
         assertEquals(5, page.getItemsPerPage());
-        assertEquals(4, page.getMaxPageNumber());
+        assertEquals(16, page.getMaxPageNumber());
         assertEquals(5, page.getItems().size());
     }
 

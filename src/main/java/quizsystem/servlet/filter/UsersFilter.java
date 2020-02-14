@@ -15,14 +15,16 @@ public class UsersFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+
         HttpSession session = request.getSession();
+
         String command = request.getParameter("command");
         User user = (User)session.getAttribute("currentUser");
-        if(command.contentEquals("users") && user.getRole().equals(Role.ADMIN)){
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
-        } else {
+
+        if(command != null && command.contentEquals("users") && user.getRole().equals(Role.STUDENT)){
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        } else {
+            filterChain.doFilter(servletRequest, servletResponse);
         }
     }
 }

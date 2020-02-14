@@ -11,6 +11,7 @@
 </head>
 <body>
 <form>
+    <input type="hidden" name="command" value="${param.command}"/>
     <select id="language" name="language" onchange="submit()">
         <option value="en" ${language == 'en' ? 'selected' : ''}><fmt:message key="en"/></option>
         <option value="ru" ${language == 'ru' ? 'selected' : ''}><fmt:message key="ru"/></option>

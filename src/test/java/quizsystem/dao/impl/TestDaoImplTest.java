@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestDao {
+public class TestDaoImplTest {
 
     Class<ApplicationInjector> injectorClass;
     Field testDao;

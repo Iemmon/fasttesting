@@ -22,15 +22,17 @@ public class BasicServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String command = req.getParameter("command");
-        final String  page = commandNameToCommand.getOrDefault(command, defaultCommand).execute(req);
-        req.getRequestDispatcher(page).forward(req, resp);
+        processRequest(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String command = req.getParameter("command");
-        final String  page = commandNameToCommand.getOrDefault(command, defaultCommand).execute(req);
-        req.getRequestDispatcher(page).forward(req, resp);
+        processRequest(req, resp);
+    }
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String command = request.getParameter("command");
+        final String page = commandNameToCommand.getOrDefault(command, defaultCommand).execute(request);
+        request.getRequestDispatcher(page).forward(request, response);
     }
 }

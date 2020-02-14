@@ -10,10 +10,10 @@ import java.util.Properties;
 
 public class MailSender {
 
-    public void sendMail(String email, String topic) throws IOException {
+    public void sendMail(String email, String test, Integer score) throws IOException {
         final String username = "quizmail@yahoo.com";
-        final String password = "reliablepassword";
-        File file = new File("mail.properties");
+        final String password = "sjkwmmyqzeosryqb";
+        File file = new File("src/main/resources/mail.properties");
         FileInputStream fileInput = new FileInputStream(file);
         Properties properties = new Properties();
         properties.load(fileInput);
@@ -26,14 +26,13 @@ public class MailSender {
                 });
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("from@gmail.com"));
+            message.setFrom(new InternetAddress(username));
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse("to_username_a@gmail.com"));
+                    InternetAddress.parse(email));
 
             message.setSubject("TEST RESULT");
-            message.setText("Dear Mail Crawler,"
-                    + "\n\n Please do not spam my email!");
+            message.setText("You have " + score + " points for " + test + " test");
 
             Transport.send(message);
 

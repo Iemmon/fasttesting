@@ -57,6 +57,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
                 }
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             LOGGER.warn(String.format(findByParam + " failed", e));
             throw new DataBaseSqlRuntimeException("Nothing was found", e);
         }
@@ -70,6 +71,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
             designatedParamSetter.accept(preparedStatement, param);
             return getDataFromResultSet(preparedStatement);
         } catch (SQLException e) {
+            e.printStackTrace();
             LOGGER.warn(String.format(findByParam + " failed", e));
             throw new DataBaseSqlRuntimeException("Nothing was found", e);
         }
@@ -81,6 +83,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
                      pool.getConnection().prepareStatement(findAll)) {
             return getDataFromResultSet(preparedStatement);
         } catch (SQLException e) {
+            e.printStackTrace();
             LOGGER.warn(String.format(findAll + " failed", e));
             throw new DataBaseSqlRuntimeException("No entries were found", e);
         }
@@ -95,6 +98,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
             }
             return entities;
         } catch (SQLException e) {
+            e.printStackTrace();
             LOGGER.warn(String.format("Unable to get data from result set", e));
             throw new DataBaseSqlRuntimeException("Unable to get data from result set", e);
         }

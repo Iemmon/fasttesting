@@ -16,13 +16,12 @@ public class LoginUserCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        final String email = (String) request.getParameter("email");
-        final String password = (String) request.getParameter("pass");
-        System.out.println("dfsdgsdvd");
+        final String email = request.getParameter("email");
+        final String password = request.getParameter("pass");
         Optional<User> user = userService.login(email, password);
         if(user.isPresent()) {
             final HttpSession session = request.getSession();
-            session.setAttribute("currentUser", user);
+            session.setAttribute("currentUser", user.get());
             return "home.jsp";
         } else {
             request.setAttribute("has_error", true);

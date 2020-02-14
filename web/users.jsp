@@ -27,6 +27,7 @@
         <tr>
             <td>${user.getUserId()}</td>
             <td>${user.getEmail()}</td>
+            <td>${user.getAverageMark()}</td>
         </tr>
     </c:forEach>
 </table>

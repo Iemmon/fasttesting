@@ -1,7 +1,5 @@
 package quizsystem.servlet.filter;
 
-import quizsystem.entity.User;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,12 +17,10 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-        User user = (User) session.getAttribute("currentUser");
-        if (user == null) {
+        if (session.getAttribute("currentUser") == null) {
             ((HttpServletResponse) servletResponse).sendRedirect(request.getContextPath() + "/?command=login");
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
-        return;
     }
 }

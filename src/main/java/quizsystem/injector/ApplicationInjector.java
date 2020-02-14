@@ -73,6 +73,8 @@ public class ApplicationInjector {
 
     private static final Command TOPIC_COMMAND = new TopicCommand(TOPIC_SERVICE);
 
+    private static final Command HOME_COMMAND = new HomeCommand();
+
     private static final Map<String, Command> COMMAND_NAME_TO_COMMAND = initUserCommand();
 
     private static Map<String, Command> initUserCommand() {
@@ -88,6 +90,7 @@ public class ApplicationInjector {
         commandMap.put("users", USER_COMMAND);
         commandMap.put("questions", QUESTIONS_COMMAND);
         commandMap.put("topics", TOPIC_COMMAND);
+        commandMap.put("home", HOME_COMMAND);
 
         return Collections.unmodifiableMap(commandMap);
     }

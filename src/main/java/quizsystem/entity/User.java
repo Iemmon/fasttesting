@@ -15,6 +15,7 @@ public class User implements Serializable {
         this.email = builder.email;
         this.password = builder.password;
         this.role = builder.role;
+        this.averageMark = builder.averageMark;
     }
 
     public Long getUserId() {
@@ -31,6 +32,10 @@ public class User implements Serializable {
 
     public String getPassword() {
         return password;
+    }
+
+    public Double getAverageMark() {
+        return averageMark;
     }
 
     public static Builder builder() {

@@ -11,6 +11,7 @@ public class UserValidator implements Validator<User>{
     @Override
     public boolean validateEmail(String email) {
         System.out.println(email);
+        System.out.println(email.matches(Pattern.EMAIL_PATTERN.toString()));
         return email.matches(Pattern.EMAIL_PATTERN.toString());
     }
 
