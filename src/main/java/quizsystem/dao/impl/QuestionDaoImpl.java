@@ -6,17 +6,18 @@ import quizsystem.dao.connectionpool.ConnectionPool;
 import quizsystem.dao.exception.DataBaseSqlRuntimeException;
 import quizsystem.entity.Answer;
 import quizsystem.entity.Question;
+import quizsystem.entity.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionDaoImpl extends AbstractCrudDaoImpl<Question> implements QuestionDao {
     protected static final Logger LOGGER = Logger.getLogger(QuestionDaoImpl.class);
 
-    private static final String SAVE_QUERY = "INSERT INTO questions name=?";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM questions WHERE id=?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM questions";
     private static final String FIND_ALL_BY_TEST_ID_QUERY = "SELECT questions.id, questions.question_text, answers.id as answer_id, answers.answer_text, answers.is_correct FROM questions INNER JOIN answers ON answers.question_id = questions.id WHERE questions.test_id=?";
@@ -24,18 +25,6 @@ public class QuestionDaoImpl extends AbstractCrudDaoImpl<Question> implements Qu
 
     public QuestionDaoImpl(ConnectionPool pool) {
         super(pool, FIND_BY_ID_QUERY, FIND_ALL_QUERY, COUNT_QUERY);
-    }
-
-    @Override
-    public Question save(Question entity) {
-        try (final PreparedStatement preparedStatement = pool.getConnection().prepareStatement(SAVE_QUERY)) {
-            preparedStatement.setString(1, entity.getQuestion());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.warn(String.format(SAVE_QUERY + " failed", e));
-            throw new DataBaseSqlRuntimeException("Question saving failed", e);
-        }
-        return entity;
     }
 
     @Override

@@ -22,6 +22,9 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class QuestionServiceImplTest {
 
+    private static final Long TEST_ID = 10L;
+    private static final Long ANSWER_ID_CHOSEN_BY_USER = 1L;
+
     @Mock
     private QuestionDao questionDao;
 
@@ -32,12 +35,22 @@ public class QuestionServiceImplTest {
     public void findAllByTestId() {
         List<Question> questionList = new ArrayList<>();
         when(questionDao.findAllByTestId(any(Long.class))).thenReturn(questionList);
-        List<Question> questions = questionService.findAllByTestId(5L);
+        List<Question> questions = questionService.findAllByTestId(TEST_ID);
         assertSame(questionList, questions);
     }
 
     @Test
-    public void getIncorrectAnsweredQuestions() {
+    public void getIncorrectAnsweredQuestionsShouldReturnNothingWhenAnswerIsCorrect() {
+        List<Question> questionList = setListOfQuestions();
+        Set<Long> userAnswers = new HashSet<>();
+        userAnswers.add(ANSWER_ID_CHOSEN_BY_USER);
+
+        when(questionDao.findAllByTestId(any(Long.class))).thenReturn(questionList);
+        int numOfIncorrectAnswers = questionService.getIncorrectAnsweredQuestions(TEST_ID, userAnswers).size();
+        assertEquals(0, numOfIncorrectAnswers);
+    }
+
+    private List<Question> setListOfQuestions(){
         List<Question> questionList = new ArrayList<>();
         List<Answer> answers = new ArrayList<>();
         answers.add(new Answer(1L, "Answer", true));
@@ -46,10 +59,6 @@ public class QuestionServiceImplTest {
 
         questionList.add(new Question(1L, "Question text", answers));
 
-        when(questionDao.findAllByTestId(any(Long.class))).thenReturn(questionList);
-
-        Set<Long> userAnswers = new HashSet<>();
-        userAnswers.add(1L);
-        assertEquals(0, questionService.getIncorrectAnsweredQuestions(10L, userAnswers).size());
+        return questionList;
     }
 }

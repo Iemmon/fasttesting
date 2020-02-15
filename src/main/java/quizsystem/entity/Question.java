@@ -8,13 +8,16 @@ public class Question {
     private List<Answer> listOfAnswers;
 
     public Question(Long id, String question, List<Answer> listOfAnswers) {
-        this.id = id;
-        this.question = question;
+        this(id, question);
         this.listOfAnswers = listOfAnswers;
     }
 
     public Question(Long id, String question){
+        this(question);
         this.id = id;
+    }
+
+    public Question(String question){
         this.question = question;
     }
 

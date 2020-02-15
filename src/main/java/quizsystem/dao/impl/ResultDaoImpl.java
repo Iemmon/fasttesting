@@ -10,6 +10,7 @@ import quizsystem.entity.Test;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class ResultDaoImpl extends AbstractCrudDaoImpl<Result> implements ResultDao {
@@ -27,16 +28,20 @@ public class ResultDaoImpl extends AbstractCrudDaoImpl<Result> implements Result
 
     @Override
     public Result save(Result entity) {
-        try (final PreparedStatement preparedStatement = pool.getConnection().prepareStatement(SAVE_QUERY)) {
+        try (final PreparedStatement preparedStatement = pool.getConnection().prepareStatement(SAVE_QUERY, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, entity.getTest().getId());
             preparedStatement.setInt(2, entity.getScore());
             preparedStatement.setLong(3, entity.getUserId());
-            preparedStatement.executeUpdate();
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+            return getResultByGeneratedKey(preparedStatement, entity);
         } catch (SQLException e) {
+            e.printStackTrace();
             LOGGER.warn(String.format(SAVE_QUERY + " failed", e));
             throw new DataBaseSqlRuntimeException("Result saving failed", e);
         }
-        return entity;
     }
 
     @Override
@@ -48,5 +53,15 @@ public class ResultDaoImpl extends AbstractCrudDaoImpl<Result> implements Result
     protected Result mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         Test test = new Test(resultSet.getLong("test_id"), resultSet.getString("name"));
         return new Result(resultSet.getLong("id"), resultSet.getInt("score"), test, resultSet.getLong("user_id"));
+    }
+
+    private Result getResultByGeneratedKey(PreparedStatement preparedStatement, Result entity) throws SQLException {
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                return new Result(generatedKeys.getLong(1), entity.getScore(), entity.getTest(), entity.getUserId());
+            } else {
+                throw new SQLException("Result creation failed, no ID obtained.");
+            }
+        }
     }
 }

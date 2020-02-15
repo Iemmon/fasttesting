@@ -13,7 +13,7 @@ class ShieldedRequest extends HttpServletRequestWrapper {
     public String[] getParameterValues(String parameter) {
 
         String[] values = super.getParameterValues(parameter);
-        if (values==null)  {
+        if (values == null) {
             return null;
         }
         int count = values.length;
@@ -39,7 +39,6 @@ class ShieldedRequest extends HttpServletRequestWrapper {
         if (value == null)
             return null;
         return cleanXSS(value);
-
     }
 
     private String cleanXSS(String value) {

@@ -2,6 +2,7 @@ package quizsystem.servlet.filter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.servlet.FilterChain;
@@ -21,42 +22,41 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class LoginFilterTest {
 
+    @Mock
+    HttpServletRequest request;
+
+    @Mock
+    HttpServletResponse response;
+
+    @Mock
+    HttpSession session;
+
+    @Mock
+    FilterChain filterChain;
+
+
     @Test
     public void testLogin () throws IOException, ServletException {
-
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
         when(request.getParameter(eq("command"))).thenReturn("login");
-
-        FilterChain filterChain = mock(FilterChain.class);
 
         LoginFilter loginFilter = new LoginFilter();
 
         loginFilter.doFilter(request, response, filterChain);
-
         verify(filterChain).doFilter(request, response);
     }
 
     @Test
     public void testAuthorized () throws IOException, ServletException {
-
         String contextPath = "/path/";
-
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
-
-        HttpSession session = mock(HttpSession.class);
-        FilterChain filterChain = mock(FilterChain.class);
 
         when(session.getAttribute(eq("currentUser"))).thenReturn(null);
         when(request.getParameter(eq("command"))).thenReturn("anyCommand");
         when(request.getSession()).thenReturn(session);
         when(request.getContextPath()).thenReturn(contextPath);
 
-
         LoginFilter loginFilter = new LoginFilter();
-        loginFilter.doFilter(request, response, filterChain);
 
+        loginFilter.doFilter(request, response, filterChain);
         verify(response).sendRedirect(contextPath + "/?command=login");
     }
 }

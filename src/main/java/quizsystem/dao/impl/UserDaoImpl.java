@@ -48,7 +48,7 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
     }
 
     @Override
-    public Page findAll(PageRequest pageRequest) {
+    public Page<User> findAll(PageRequest pageRequest) {
         List<User> entities = new ArrayList<>();
         try (final PreparedStatement preparedStatement =
                      pool.getConnection().prepareStatement(FIND_ALL_SCORE)) {
@@ -56,7 +56,6 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
             preparedStatement.setInt(2, (pageRequest.getPageNumber() - 1) * pageRequest.getItemsPerPage());
 
             try (final ResultSet resultSet = preparedStatement.executeQuery()) {
-
                 while (resultSet.next()) {
                     final User optionalEntity = mapResultSetToEntityWithScore(resultSet);
                     entities.add(optionalEntity);
@@ -65,7 +64,7 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return new Page(entities, pageRequest.getPageNumber(), pageRequest.getItemsPerPage(), pageRequest.getMaxPages());
+        return new Page<>(entities, pageRequest.getPageNumber(), pageRequest.getItemsPerPage(), pageRequest.getMaxPages());
     }
 
     @Override
@@ -79,17 +78,7 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
             if (affectedRows == 0) {
                 throw new SQLException("Creating user failed, no rows affected.");
             }
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    return User.builder().withId(generatedKeys.getLong(1))
-                            .withEmail(entity.getEmail())
-                            .withPassword(entity.getPassword())
-                            .withRole(entity.getRole())
-                            .build();
-                } else {
-                    throw new SQLException("Creating user failed, no ID obtained.");
-                }
-            }
+            return getUserByGeneratedKey(preparedStatement, entity);
         } catch (SQLException e) {
             LOGGER.warn("SQL Exception threw in UserDaoImpl:save: ", e);
             throw new DataBaseSqlRuntimeException("User was not saved", e);
@@ -113,6 +102,20 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
                 .withRole(Role.valueOf(resultSet.getString("role")))
                 .withAverageMark(resultSet.getDouble("avg_score"))
                 .build();
+    }
+
+    private User getUserByGeneratedKey(PreparedStatement preparedStatement, User entity) throws SQLException {
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                return User.builder().withId(generatedKeys.getLong(1))
+                        .withEmail(entity.getEmail())
+                        .withPassword(entity.getPassword())
+                        .withRole(entity.getRole())
+                        .build();
+            } else {
+                throw new SQLException("User creation failed, no ID obtained.");
+            }
+        }
     }
 
 }

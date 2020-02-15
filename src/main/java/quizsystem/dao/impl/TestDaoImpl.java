@@ -17,7 +17,6 @@ public class TestDaoImpl extends AbstractCrudDaoImpl<Test> implements TestDao {
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM tests WHERE id=?";
     private static final String FIND_BY_TOPIC_ID_QUERY = "SELECT * FROM tests WHERE topic_id=?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM tests";
-    private static final String SAVE_QUERY = "INSERT INTO ";
     private static final String COUNT_QUERY = "SELECT COUNT(*) FROM tests";
 
 

@@ -41,10 +41,10 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public Optional<E> findById(Long id) throws DataBaseSqlRuntimeException {
-        return findByParam(id, findByIdQuery, LONG_PARAM_SETTER);
-    }
+//    @Override
+//    public Optional<E> findById(Long id) {
+//        return findByParam(id, findByIdQuery, LONG_PARAM_SETTER);
+//    }
 
     protected <P> Optional<E> findByParam(P param, String findByParam, BiConsumer<PreparedStatement, P> designatedParamSetter) {
         try (final PreparedStatement preparedStatement =

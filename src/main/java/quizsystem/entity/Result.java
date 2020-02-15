@@ -1,5 +1,7 @@
 package quizsystem.entity;
 
+import java.util.Objects;
+
 public class Result {
     private Long id;
     private Test test;
@@ -33,5 +35,21 @@ public class Result {
 
     public Long getUserId() {
         return userId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Result result = (Result) o;
+        return Objects.equals(id, result.id) &&
+                Objects.equals(test, result.test) &&
+                Objects.equals(userId, result.userId) &&
+                Objects.equals(score, result.score);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, test, userId, score);
     }
 }
