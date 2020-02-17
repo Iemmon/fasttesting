@@ -52,4 +52,14 @@ public class Result {
     public int hashCode() {
         return Objects.hash(id, test, userId, score);
     }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "id=" + id +
+                ", test=" + test +
+                ", userId=" + userId +
+                ", score=" + score +
+                '}';
+    }
 }

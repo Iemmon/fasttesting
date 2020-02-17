@@ -15,7 +15,6 @@ INSERT INTO users(id, email, password, role) VALUES (14, 'oifvrknu@gmail.com', '
 INSERT INTO users(id, email, password, role) VALUES (15, 'wuxfklkfc@games.com', 'nvkrhfakR29', 'STUDENT');
 INSERT INTO users(id, email, password, role) VALUES (16, 'uyweocnzmz@ygm.com', 'fsbfc7SST', 'STUDENT');
 
-
 INSERT INTO results(id, score, user_id, test_id) VALUES (1, 60, 1, 1);
 INSERT INTO results(id, score, user_id, test_id) VALUES (2, 80, 1, 1);
 

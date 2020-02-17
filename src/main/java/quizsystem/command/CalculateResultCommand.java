@@ -25,13 +25,8 @@ public class CalculateResultCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Set<Long> userAnswers = new HashSet<>();
-        for(String key : request.getParameterMap().keySet()){
-            if(!key.matches("[0-9]+")){
-                continue;
-            }
-            userAnswers.add(Long.parseLong(key));
-        }
+        Set<Long> userAnswers = getUserAnswers(request);
+
         Long testId = Long.parseLong(request.getParameter("test_id"));
         Test test = new Test(testId);
         Long userId = ((User)request.getSession().getAttribute("currentUser")).getUserId();
@@ -48,5 +43,16 @@ public class CalculateResultCommand implements Command {
         request.setAttribute("score", score);
         request.setAttribute("ans", userAnswers);
         return "testresult.jsp";
+    }
+
+    private Set<Long> getUserAnswers(HttpServletRequest request){
+        Set<Long> userAnswers = new HashSet<>();
+        for(String key : request.getParameterMap().keySet()){
+            if(!key.matches("[0-9]+")){
+                continue;
+            }
+            userAnswers.add(Long.parseLong(key));
+        }
+        return userAnswers;
     }
 }

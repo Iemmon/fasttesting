@@ -24,4 +24,6 @@ public class RegisterCommand implements Command{
         return "home.jsp";
     }
 
+
+
 }

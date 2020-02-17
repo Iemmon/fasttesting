@@ -28,7 +28,7 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
     private static final String SAVE_QUERY = "INSERT INTO users (email, password, role) VALUES (?, ?, ?)";
     private static final String COUNT_QUERY = "SELECT COUNT(*) FROM users";
 
-    private static final String FIND_ALL_SCORE = "SELECT users.id, users.email, users.role, AVG(results.score) as avg_score FROM users LEFT JOIN results ON results.user_id = users.id WHERE users.role = 'STUDENT' GROUP BY users.id  LIMIT ? OFFSET ?";
+    private static final String FIND_ALL_WITH_SCORE_AND_PAGINATION = "SELECT users.id, users.email, users.role, AVG(results.score) as avg_score FROM users LEFT JOIN results ON results.user_id = users.id WHERE users.role = 'STUDENT' GROUP BY users.id  LIMIT ? OFFSET ?";
 
     private final BiConsumer<PreparedStatement, String> STRING_PARAM_SETTER = ((preparedStatement, string) -> {
         try {
@@ -51,7 +51,7 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
     public Page<User> findAll(PageRequest pageRequest) {
         List<User> entities = new ArrayList<>();
         try (final PreparedStatement preparedStatement =
-                     pool.getConnection().prepareStatement(FIND_ALL_SCORE)) {
+                     pool.getConnection().prepareStatement(FIND_ALL_WITH_SCORE_AND_PAGINATION)) {
             preparedStatement.setInt(1, pageRequest.getItemsPerPage());
             preparedStatement.setInt(2, (pageRequest.getPageNumber() - 1) * pageRequest.getItemsPerPage());
 

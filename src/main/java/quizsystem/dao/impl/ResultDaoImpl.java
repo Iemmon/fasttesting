@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import quizsystem.dao.ResultDao;
 import quizsystem.dao.connectionpool.ConnectionPool;
 import quizsystem.dao.exception.DataBaseSqlRuntimeException;
+import quizsystem.dao.pagination.Page;
+import quizsystem.dao.pagination.PageRequest;
 import quizsystem.entity.Result;
 import quizsystem.entity.Test;
 
@@ -21,6 +23,8 @@ public class ResultDaoImpl extends AbstractCrudDaoImpl<Result> implements Result
     private static final String FIND_ALL_QUERY = "SELECT * FROM results";
     private static final String COUNT_QUERY = "SELECT COUNT(*) FROM results";
     private static final String FIND_ALL_BY_USER_ID_QUERY = "SELECT * FROM results LEFT JOIN tests ON test_id=tests.id WHERE user_id=?";
+    private static final String FIND_ALL_BY_USER_ID_QUERY_PAGED = "SELECT * FROM results LEFT JOIN tests ON test_id=tests.id WHERE user_id=? LIMIT ? OFFSET ?";
+    private static final String COUNT_BY_USER_ID = "SELECT COUNT(*) FROM results WHERE user_id=?";
 
     public ResultDaoImpl(ConnectionPool pool) {
         super(pool, FIND_BY_ID_QUERY, FIND_ALL_QUERY, COUNT_QUERY);
@@ -45,8 +49,18 @@ public class ResultDaoImpl extends AbstractCrudDaoImpl<Result> implements Result
     }
 
     @Override
+    public Long countByUserId(Long userId){
+        return countByParam(userId, COUNT_BY_USER_ID);
+    }
+
+    @Override
     public List<Result> findAllByUserId(Long id) {
         return findAllByParam(id, FIND_ALL_BY_USER_ID_QUERY, LONG_PARAM_SETTER);
+    }
+
+    @Override
+    public Page<Result> findAllByUserId(Long id, PageRequest pageRequest) {
+        return findAllByParam(id, pageRequest, FIND_ALL_BY_USER_ID_QUERY_PAGED, LONG_PARAM_SETTER);
     }
 
     @Override

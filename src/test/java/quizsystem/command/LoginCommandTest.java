@@ -17,13 +17,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LoginUserCommandTest {
+public class LoginCommandTest {
 
     @Mock
     private UserService userService;
 
     @InjectMocks
-    private LoginUserCommand loginUserCommand;
+    private LoginCommand loginCommand;
 
     @Mock
     private HttpServletRequest request;
@@ -40,7 +40,7 @@ public class LoginUserCommandTest {
         when(userService.login(email, password)).thenReturn(Optional.of(user));
         when(request.getSession()).thenReturn(session);
 
-        String homePage = loginUserCommand.execute(request);
+        String homePage = loginCommand.execute(request);
         assertEquals("home.jsp", homePage);
 
         verify(session).setAttribute("currentUser", user);
@@ -52,9 +52,8 @@ public class LoginUserCommandTest {
         String password = request.getParameter("pass");
 
         when(userService.login(email, password)).thenReturn(Optional.empty());
-        when(request.getSession()).thenReturn(session);
 
-        String loginPage = loginUserCommand.execute(request);
+        String loginPage = loginCommand.execute(request);
         assertEquals("login.jsp", loginPage);
         verify(request).setAttribute("has_error", true);
     }

@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import quizsystem.dao.pagination.Page;
 import quizsystem.dao.pagination.PageRequest;
-import quizsystem.entity.Result;
 import quizsystem.entity.Role;
 import quizsystem.entity.User;
 import quizsystem.injector.ApplicationInjector;
@@ -43,7 +42,7 @@ public class UserDaoImplTest {
 
     @Test
     public void testFindAllUsersWithPaginationShouldReturnPage(){
-        Page page = userDaoObject.findAll(new PageRequest(2, 5, 16));
+        Page<User> page = userDaoObject.findAll(new PageRequest(2, 5, 16));
         assertEquals(2, page.getPageNumber());
         assertEquals(5, page.getItemsPerPage());
         assertEquals(16, page.getMaxPageNumber());

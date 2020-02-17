@@ -11,7 +11,7 @@
         <div class="col">
             <div class="alert alert-danger" role="alert">
                 Error! RUN FOR YOUR LIFE!!!!!
-                <a href="home.jsp">Return main page</a>
+                <a href="home.jsp">Return to main page</a>
             </div>
         </div>
     </div>

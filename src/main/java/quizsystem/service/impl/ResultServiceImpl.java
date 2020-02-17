@@ -1,6 +1,9 @@
 package quizsystem.service.impl;
 
 import quizsystem.dao.ResultDao;
+import quizsystem.dao.pagination.Page;
+import quizsystem.dao.pagination.PageRequest;
+import quizsystem.dao.pagination.PageRequestParser;
 import quizsystem.entity.Result;
 import quizsystem.service.ResultService;
 
@@ -18,7 +21,14 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public List<Result> getAllResults(Long user) {
-        return resultDao.findAllByUserId(user);
+    public Page<Result> getAllResults(Long userId, String page, int itemsPerPage) {
+        PageRequest pageRequest = PageRequestParser.parseIntoPageRequest(page, resultDao.countByUserId(userId));
+        return resultDao.findAllByUserId(userId, pageRequest);
     }
+
+//       @Override
+//    public Page<Result> findAll(String page, int itemsPerPage) {
+//        PageRequest pageRequest = PageRequestParser.parseIntoPageRequest(page, userDao.count());
+//        return userDao.findAll(pageRequest);
+//    }
 }

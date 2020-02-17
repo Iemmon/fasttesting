@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import quizsystem.dao.TestDao;
 import quizsystem.dao.connectionpool.ConnectionPool;
 import quizsystem.dao.exception.DataBaseSqlRuntimeException;
+import quizsystem.dao.pagination.Page;
+import quizsystem.dao.pagination.PageRequest;
 import quizsystem.entity.Test;
 
 import java.sql.PreparedStatement;
@@ -16,6 +18,7 @@ public class TestDaoImpl extends AbstractCrudDaoImpl<Test> implements TestDao {
 
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM tests WHERE id=?";
     private static final String FIND_BY_TOPIC_ID_QUERY = "SELECT * FROM tests WHERE topic_id=?";
+    private static final String FIND_BY_TOPIC_ID_PAGEABLE_QUERY = "SELECT * FROM tests WHERE topic_id=? LIMIT ? OFFSET ?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM tests";
     private static final String COUNT_QUERY = "SELECT COUNT(*) FROM tests";
 
@@ -27,6 +30,11 @@ public class TestDaoImpl extends AbstractCrudDaoImpl<Test> implements TestDao {
     @Override
     public List<Test> findAllByTopicId(Long topicId) {
         return super.findAllByParam(topicId, FIND_BY_TOPIC_ID_QUERY, LONG_PARAM_SETTER);
+    }
+
+    @Override
+    public Page<Test> findAllByTopicId(Long topicId, PageRequest pageRequest){
+        return findAllByParam(topicId, pageRequest, FIND_BY_TOPIC_ID_PAGEABLE_QUERY, LONG_PARAM_SETTER);
     }
 
     @Override

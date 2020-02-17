@@ -1,5 +1,6 @@
 package quizsystem.command;
 
+import quizsystem.entity.Role;
 import quizsystem.entity.User;
 import quizsystem.service.UserService;
 
@@ -7,10 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
-public class LoginUserCommand implements Command {
+public class LoginCommand implements Command {
     private final UserService userService;
 
-    public LoginUserCommand(UserService userService) {
+    public LoginCommand(UserService userService) {
         this.userService = userService;
     }
 

@@ -7,14 +7,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import quizsystem.dao.UserDao;
+import quizsystem.dao.pagination.Page;
+import quizsystem.dao.pagination.PageRequest;
+import quizsystem.dao.pagination.PageRequestParser;
+import quizsystem.entity.Role;
 import quizsystem.entity.User;
 import quizsystem.service.encryptor.PasswordEncryption;
 import quizsystem.service.validator.Validator;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -88,17 +92,21 @@ public class UserServiceImplTest {
 
     @Test
     public void userShouldRegisterSuccessfully() {
-        when(userValidator.validateEmail(USER_EMAIL)).thenReturn(true);
-        when(userValidator.validatePassword(PASSWORD)).thenReturn(true);
+
+        User user = User.builder().withEmail(USER_EMAIL).withPassword(ENCODED_PASSWORD).withRole(Role.STUDENT).build();
+
+        when(userValidator.validateEmail(eq(USER_EMAIL))).thenReturn(true);
+        when(userValidator.validatePassword(eq(PASSWORD))).thenReturn(true);
         when(userDao.findByEmail(anyString())).thenReturn(Optional.empty());
         when(passwordEncryption.encrypt(PASSWORD)).thenReturn(ENCODED_PASSWORD);
-        when(userDao.save(any(User.class))).thenReturn(any(User.class));
+        when(userDao.save(any(User.class))).thenReturn(user);
 
         Optional<User> registeredUser = userService.register(USER_EMAIL, PASSWORD);
         assertTrue(registeredUser.isPresent());
 
+        verify(userDao).save(eq(user));
         verify(userDao).findByEmail(anyString());
-        verify(userDao).save(registeredUser.get());
+        //verify(userDao).save(registeredUser.get());
     }
 
     @Test
@@ -124,5 +132,21 @@ public class UserServiceImplTest {
         assertFalse(registeredUser.isPresent());
 
         verify(userDao, times(0)).save(any(User.class));
+    }
+
+    @Test
+    public void findAllShouldReturnPageWithUsers(){
+        PageRequest request = new PageRequest(1, 5, 4);
+        when(userDao.count()).thenReturn(20L);
+
+        Page<User> page = new Page<>(new ArrayList<>(), 1, 5, 4);
+        when(userDao.findAll(any(PageRequest.class))).thenReturn(page);
+
+        Page<User> requestedPage = userService.findAll("1", 5);
+
+        assertEquals(page, requestedPage);
+
+        verify(userDao).findAll(eq(request));
+        verify(userDao).count();
     }
 }

@@ -51,19 +51,19 @@ public class ApplicationInjector {
 
     private static final ResultService RESULT_SERVICE = new ResultServiceImpl(RESULT_DAO);
 
-    private static final Command LOGIN_COMMAND = new LoginUserCommand(USER_SERVICE);
+    private static final Command LOGIN_COMMAND = new LoginCommand(USER_SERVICE);
 
     private static final Command LOGOUT_COMMAND = new LogoutCommand();
 
     private static final Command REGISTER_COMMAND = new RegisterCommand(USER_SERVICE);
 
-    private static final Command USER_RESULTS_COMMAND = new UserResultsCommand(RESULT_SERVICE);
+    private static final Command USER_RESULTS_COMMAND = new UserResultsCommand(RESULT_SERVICE, RESOURCE_FILE);
 
     private static final Command CALCULATE_RESULT_COMMAND = new CalculateResultCommand(QUESTION_SERVICE, RESULT_SERVICE);
 
-    private static final Command TEST_COMMAND = new TestCommand(TEST_SERVICE);
+    private static final Command TEST_COMMAND = new TestCommand(TEST_SERVICE, RESOURCE_FILE);
 
-    private static final Command USER_COMMAND = new UserCommand(RESOURCE_FILE, USER_SERVICE);
+    private static final Command USER_COMMAND = new UserListCommand(RESOURCE_FILE, USER_SERVICE);
 
     private static final Command QUESTIONS_COMMAND = new LoadQuestionsCommand(QUESTION_SERVICE);
 

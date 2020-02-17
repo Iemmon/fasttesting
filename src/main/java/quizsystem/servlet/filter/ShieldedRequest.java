@@ -3,7 +3,7 @@ package quizsystem.servlet.filter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
-class ShieldedRequest extends HttpServletRequestWrapper {
+public class ShieldedRequest extends HttpServletRequestWrapper {
 
     public ShieldedRequest(HttpServletRequest request) {
         super(request);
@@ -43,9 +43,9 @@ class ShieldedRequest extends HttpServletRequestWrapper {
 
     private String cleanXSS(String value) {
         value = value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+        value = value.replaceAll("eval\\((.*)\\)", "");
         value = value.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");
         value = value.replaceAll("'", "&#39;");
-        value = value.replaceAll("eval\\((.*)\\)", "");
         value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
         value = value.replaceAll("script", "");
         return value;

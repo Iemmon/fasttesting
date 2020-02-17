@@ -36,7 +36,7 @@ public class QuestionDaoImpl extends AbstractCrudDaoImpl<Question> implements Qu
     protected Question mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         List<Answer> answers = new ArrayList<>();
         long currentQuestId = resultSet.getLong("id");
-        Question question = new Question(resultSet.getLong("id"), resultSet.getString("question_text"), answers);
+        Question question = new Question(currentQuestId, resultSet.getString("question_text"), answers);
         resultSet.previous();
         while (resultSet.next()) {
             if(resultSet.getLong("id") != currentQuestId){

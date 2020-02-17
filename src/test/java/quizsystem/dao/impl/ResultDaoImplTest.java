@@ -47,7 +47,7 @@ public class ResultDaoImplTest {
     @Test
     public void findAllByUserIdShouldReturnListOfResults() {
         List<Result> resultList = resultDaoObject.findAllByUserId(1L);
-        assertEquals(2, resultList.size());
+        assertEquals(3, resultList.size());
     }
 
     @Test

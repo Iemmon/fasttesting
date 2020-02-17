@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import quizsystem.dao.connectionpool.ConnectionPool;
 import quizsystem.dao.CrudDao;
 import quizsystem.dao.exception.DataBaseSqlRuntimeException;
+import quizsystem.dao.pagination.Page;
+import quizsystem.dao.pagination.PageRequest;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,11 +43,6 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
         throw new UnsupportedOperationException();
     }
 
-//    @Override
-//    public Optional<E> findById(Long id) {
-//        return findByParam(id, findByIdQuery, LONG_PARAM_SETTER);
-//    }
-
     protected <P> Optional<E> findByParam(P param, String findByParam, BiConsumer<PreparedStatement, P> designatedParamSetter) {
         try (final PreparedStatement preparedStatement =
                      pool.getConnection().prepareStatement(findByParam)) {
@@ -57,7 +54,6 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             LOGGER.warn(String.format(findByParam + " failed", e));
             throw new DataBaseSqlRuntimeException("Nothing was found", e);
         }
@@ -66,12 +62,25 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
 
     protected <P> List<E> findAllByParam(P param, String findByParam, BiConsumer<PreparedStatement, P> designatedParamSetter) {
         try (final PreparedStatement preparedStatement =
-                     pool.getConnection().prepareStatement(findByParam)) {
+                     pool.getConnection().prepareStatement(findByParam, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
 
             designatedParamSetter.accept(preparedStatement, param);
             return getDataFromResultSet(preparedStatement);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(String.format(findByParam + " failed", e));
+            throw new DataBaseSqlRuntimeException("Nothing was found", e);
+        }
+    }
+
+    protected <P> Page<E> findAllByParam(P param, PageRequest request, String findByParam, BiConsumer<PreparedStatement, P> designatedParamSetter) {
+        try (final PreparedStatement preparedStatement =
+                     pool.getConnection().prepareStatement(findByParam, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+
+            designatedParamSetter.accept(preparedStatement, param);
+            preparedStatement.setInt(2, request.getItemsPerPage());
+            preparedStatement.setInt(3, (request.getPageNumber() - 1) * request.getItemsPerPage());
+            return getPageFromResultSet(preparedStatement, request);
+        } catch (SQLException e) {e.printStackTrace();
             LOGGER.warn(String.format(findByParam + " failed", e));
             throw new DataBaseSqlRuntimeException("Nothing was found", e);
         }
@@ -83,7 +92,6 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
                      pool.getConnection().prepareStatement(findAll)) {
             return getDataFromResultSet(preparedStatement);
         } catch (SQLException e) {
-            e.printStackTrace();
             LOGGER.warn(String.format(findAll + " failed", e));
             throw new DataBaseSqlRuntimeException("No entries were found", e);
         }
@@ -104,6 +112,37 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
         }
     }
 
+    private Page<E> getPageFromResultSet(PreparedStatement preparedStatement, PageRequest request){
+        try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+            List<E> entities = new ArrayList<>();
+            while (resultSet.next()) {
+                final E optionalEntity = mapResultSetToEntity(resultSet);
+                entities.add(optionalEntity);
+            }
+            return new Page(entities, request.getPageNumber(), request.getItemsPerPage(), request.getMaxPages());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LOGGER.warn(String.format("Unable to get data from result set", e));
+            throw new DataBaseSqlRuntimeException("Unable to get data from result set", e);
+        }
+    }
+
+    public Long countByParam(Long param, String query){
+        try (final PreparedStatement preparedStatement = pool.getConnection().prepareStatement(query)){
+            preparedStatement.setLong(1, param);
+            try(ResultSet rs = preparedStatement.executeQuery();) {
+                if (rs.next()) {
+                    return rs.getLong(1);
+                }
+                return 0L;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LOGGER.warn(String.format(countAll + " failed", e));
+            throw new DataBaseSqlRuntimeException("Count failed", e);
+        }
+    }
+
     @Override
     public long count() {
         try (final PreparedStatement preparedStatement = pool.getConnection().prepareStatement(countAll);  ResultSet rs = preparedStatement.executeQuery();) {
@@ -112,8 +151,8 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
             }
             return 0;
         } catch (SQLException e) {
-            LOGGER.warn(String.format(countAll + " failed", e));
             e.printStackTrace();
+            LOGGER.warn(String.format(countAll + " failed", e));
             throw new DataBaseSqlRuntimeException("Count failed", e);
         }
     }

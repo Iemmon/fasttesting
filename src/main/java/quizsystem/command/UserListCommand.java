@@ -7,12 +7,12 @@ import quizsystem.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ResourceBundle;
 
-public class UserCommand implements Command {
+public class UserListCommand implements Command {
 
     private final ResourceBundle resourceBundle;
     private final UserService userService;
 
-    public UserCommand(ResourceBundle resourceBundle, UserService userService) {
+    public UserListCommand(ResourceBundle resourceBundle, UserService userService) {
         this.resourceBundle = resourceBundle;
         this.userService = userService;
     }

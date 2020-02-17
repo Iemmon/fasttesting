@@ -26,7 +26,7 @@
         <td><a href="?command=tests&topic_id=${topic.getId()}">${topic.getTopicName()}</a></td>
     </tr>
 </c:forEach>
-</table>>
+</table>
 <a href="?command=logout"> Logout </a>
 </body>
 </html>

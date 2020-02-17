@@ -13,13 +13,13 @@ import quizsystem.service.validator.Validator;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
-    private final UserDao userRepository;
+    private final UserDao userDao;
     private final PasswordEncryption passwordEncryption;
     private final Validator<User> userValidator;
 
-    public UserServiceImpl(UserDao userRepository, PasswordEncryption passwordEncryption,
+    public UserServiceImpl(UserDao userDao, PasswordEncryption passwordEncryption,
                            Validator<User> userValidator) {
-        this.userRepository = userRepository;
+        this.userDao = userDao;
         this.passwordEncryption = passwordEncryption;
         this.userValidator = userValidator;
     }
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
         if (!userValidator.validateEmail(email)) {
             return Optional.empty();
         }
-        Optional<User> user = userRepository.findByEmail(email);
+        Optional<User> user = userDao.findByEmail(email);
         if (user.isPresent()) {
             String encryptPassword = passwordEncryption.encrypt(password);
             if (user.get().getPassword().contentEquals(encryptPassword)) {
@@ -41,22 +41,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> register(String email, String password) {
-        if (userValidator.validateEmail(email) && userValidator.validatePassword(password) && !userRepository.findByEmail(email).isPresent()) {
+        if (userValidator.validateEmail(email) && userValidator.validatePassword(password) && !userDao.findByEmail(email).isPresent()) {
             String encryptPassword = passwordEncryption.encrypt(password);
             User userToSave = User.builder()
                     .withEmail(email)
                     .withPassword(encryptPassword)
                     .withRole(Role.STUDENT)
                     .build();
-            userRepository.save(userToSave);
-            return Optional.of(userToSave);
+            return Optional.of(userDao.save(userToSave));
         }
         return Optional.empty();
     }
 
     @Override
     public Page<User> findAll(String page, int itemsPerPage) {
-        PageRequest pageRequest = PageRequestParser.parseIntoPageRequest(page, userRepository.count());
-        return userRepository.findAll(pageRequest);
+        PageRequest pageRequest = PageRequestParser.parseIntoPageRequest(page, userDao.count());
+        return userDao.findAll(pageRequest);
     }
 }
