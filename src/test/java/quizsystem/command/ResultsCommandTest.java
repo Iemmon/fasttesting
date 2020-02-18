@@ -11,7 +11,6 @@ import quizsystem.service.ResultService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,7 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserResultsCommandTest {
+public class ResultsCommandTest {
 
     @Mock
     private ResultService resultService;
@@ -34,7 +33,7 @@ public class UserResultsCommandTest {
     private HttpSession session;
 
     @InjectMocks
-    private UserResultsCommand userResultsCommand;
+    private ResultsCommand resultsCommand;
 
     @Test
     public void executeShouldRedirectToResultsPage() {
@@ -46,7 +45,7 @@ public class UserResultsCommandTest {
         List<Result> resultList = Collections.singletonList(new Result(100, new quizsystem.entity.Test(9L, "sdf"), 10L));
 //        when(resultService.getAllResults(eq(1L))).thenReturn(resultList);
 
-        String resultsPage = userResultsCommand.execute(request);
+        String resultsPage = resultsCommand.execute(request);
         assertEquals("results.jsp", resultsPage);
 
         verify(request).setAttribute(eq("results"), eq(resultList));

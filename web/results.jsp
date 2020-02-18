@@ -42,7 +42,7 @@
     <table>
         <tr>
             <c:forEach begin="1" end="${maxPages}" var="i">
-                <td><a href="?command=${param.command}&page=${i}">${i}</a></td>
+                <td><a href="?command=${param.command}&page=${i}&user=${param.user}">${i}</a></td>
             </c:forEach>
         </tr>
     </table>

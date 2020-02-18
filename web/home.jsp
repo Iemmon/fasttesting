@@ -17,7 +17,7 @@
         <option value="ru" ${language == 'ru' ? 'selected' : ''}><fmt:message key="ru"/></option>
     </select>
 </form>
-<%--<c:if test="${sessionScope.currentUser.role eq 'ADMIN'}"><a href="?command=users"> View user list </a></c:if> <br/>--%>
+<c:if test="${sessionScope.currentUser.role eq 'ADMIN'}"><a href="?command=users"> View user list </a></c:if> <br/>
 <c:if test="${sessionScope.currentUser.role eq 'STUDENT'}"><a href="?command=results"> View results </a></c:if> <br/>
 <c:if test="${sessionScope.currentUser.role eq 'STUDENT'}"><a href="?command=topics"> Take a test </a></c:if> <br/>
 <a href="?command=logout"> Logout </a>

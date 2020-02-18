@@ -27,9 +27,9 @@
     <c:forEach var="user" items="${users}">
         <tr>
             <td>${user.getUserId()}</td>
-            <td>${user.getEmail()}</td>
+            <td><a href="?command=userdetails&user=${user.getUserId()}">${user.getEmail()}</a></td>
             <td>${user.getAverageMark()}</td>
-            <td>${user.getRole()}</td>
+                <td>${user.getRole()}</td>
         </tr>
     </c:forEach>
 </table>

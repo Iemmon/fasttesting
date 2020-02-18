@@ -57,7 +57,7 @@ public class ApplicationInjector {
 
     private static final Command REGISTER_COMMAND = new RegisterCommand(USER_SERVICE);
 
-    private static final Command USER_RESULTS_COMMAND = new UserResultsCommand(RESULT_SERVICE, RESOURCE_FILE);
+    private static final Command USER_RESULTS_COMMAND = new ResultsCommand(RESULT_SERVICE, RESOURCE_FILE);
 
     private static final Command CALCULATE_RESULT_COMMAND = new CalculateResultCommand(QUESTION_SERVICE, RESULT_SERVICE);
 
@@ -72,6 +72,8 @@ public class ApplicationInjector {
     private static final Command VIEW_REGISTER_COMMAND = new RegisterViewCommand();
 
     private static final Command TOPIC_COMMAND = new TopicCommand(TOPIC_SERVICE);
+
+    private static final Command USER_DETAILS = new ResultByUserCommand(RESULT_SERVICE, RESOURCE_FILE);
 
     private static final Command HOME_COMMAND = new HomeCommand();
 
@@ -91,6 +93,7 @@ public class ApplicationInjector {
         commandMap.put("questions", QUESTIONS_COMMAND);
         commandMap.put("topics", TOPIC_COMMAND);
         commandMap.put("home", HOME_COMMAND);
+        commandMap.put("userdetails", USER_DETAILS);
 
         return Collections.unmodifiableMap(commandMap);
     }
