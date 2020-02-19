@@ -5,6 +5,7 @@ import quizsystem.entity.Test;
 import quizsystem.service.TestService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TestCommand implements Command {
@@ -20,11 +21,8 @@ public class TestCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         Long topicId = Long.valueOf(request.getParameter("topic_id"));
-        int itemsPerPage = Integer.parseInt(resourceBundle.getString("itemsPerPage"));
-        String page = request.getParameter("page");
-        Page<Test> tests = testService.findAllByTopicId(topicId, page, itemsPerPage);
-        request.setAttribute("tests", tests.getItems());
-        request.setAttribute("maxPages", tests.getMaxPageNumber());
+        List<Test> tests = testService.findAllByTopicId(topicId);
+        request.setAttribute("tests", tests);
         return "tests.jsp";
     }
 }

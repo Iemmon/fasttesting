@@ -1,6 +1,7 @@
 package quizsystem.dao.pagination;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Page<T> {
     private final List<T> items;
@@ -29,6 +30,22 @@ public class Page<T> {
 
     public long getMaxPageNumber() {
         return maxPageNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Page<?> page = (Page<?>) o;
+        return pageNumber == page.pageNumber &&
+                itemsPerPage == page.itemsPerPage &&
+                maxPageNumber == page.maxPageNumber &&
+                Objects.equals(items, page.items);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(items, pageNumber, itemsPerPage, maxPageNumber);
     }
 }
 

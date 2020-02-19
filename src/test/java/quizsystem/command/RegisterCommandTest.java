@@ -38,17 +38,19 @@ public class RegisterCommandTest {
 
         String email = "someemail@gmail.com";
         String pass = "password";
-        when(request.getAttribute(eq("email"))).thenReturn(email);
-        when(request.getAttribute(eq("password"))).thenReturn(pass);
+        String confPass = "password";
+
+        when(request.getParameter(eq("email"))).thenReturn(email);
+        when(request.getParameter(eq("pass"))).thenReturn(pass);
+        when(request.getParameter(eq("confpass"))).thenReturn(confPass);
 
         when(request.getSession()).thenReturn(session);
 
         User user = User.builder().withEmail(email).withPassword(pass).withRole(Role.STUDENT).build();
-        when(userService.register(email, pass)).thenReturn(Optional.of(user));
+        when(userService.register(eq(email), eq(pass), eq(confPass))).thenReturn(Optional.of(user));
 
         String result = registerCommand.execute(request);
         assertEquals("home.jsp", result);
-
 
         verify(session).setAttribute(eq("currentUser"), eq(user));
 

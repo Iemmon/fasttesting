@@ -81,12 +81,11 @@ public class ApplicationInjector {
 
     private static Map<String, Command> initUserCommand() {
         Map<String, Command> commandMap = new HashMap<>();
-        commandMap.put("register", VIEW_REGISTER_COMMAND);
         commandMap.put("login", VIEW_LOGIN_COMMAND);
         commandMap.put("processlogin", LOGIN_COMMAND);
         commandMap.put("logout", LOGOUT_COMMAND);
         commandMap.put("results", USER_RESULTS_COMMAND);
-        commandMap.put("processregister", REGISTER_COMMAND);
+        commandMap.put("register", REGISTER_COMMAND);
         commandMap.put("result", CALCULATE_RESULT_COMMAND);
         commandMap.put("tests", TEST_COMMAND);
         commandMap.put("users", USER_COMMAND);
@@ -94,6 +93,7 @@ public class ApplicationInjector {
         commandMap.put("topics", TOPIC_COMMAND);
         commandMap.put("home", HOME_COMMAND);
         commandMap.put("userdetails", USER_DETAILS);
+        commandMap.put("signup", VIEW_REGISTER_COMMAND);
 
         return Collections.unmodifiableMap(commandMap);
     }

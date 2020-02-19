@@ -20,7 +20,7 @@
             <div class="jumbotron jumbotron-fluid">
                 <div class="container">
                     <h1 class="display-4">Hello!</h1>
-                    <p class="lead">Welcome to the best quiz website! Enjoy out variaty of different questions in JAVA, SQL and other topics. I have spent sooo many hours collecting questions for these tests.</p>
+                    <p class="lead">Welcome to quiz website! Enjoy out variety of different questions in JAVA, SQL and other topics.</p>
                 </div>
             </div>
         </div>

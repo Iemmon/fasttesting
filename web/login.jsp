@@ -15,6 +15,7 @@
     <div class="row justify-content-end">
         <div class="col-1">
             <form>
+                <input type="hidden" name="command" value="login">
                 <select id="language" name="language" onchange="submit()">
                     <option value="en" ${language == 'en' ? 'selected' : ''}><fmt:message key="en"/></option>
                     <option value="ru" ${language == 'ru' ? 'selected' : ''}><fmt:message key="ru"/></option>
@@ -25,38 +26,40 @@
 
     <c:if test="${has_error != null}">
         <div class="row justify-content-center">
-            <div class="col-2">
+            <div class="col">
                 <div class="alert alert-danger" role="alert">
                     <p><fmt:message key="login-error"/></p>
                 </div>
             </div>
         </div>
     </c:if>
+    <div class="login-form">
+        <form method="post" action="${pageContext.servletContext.contextPath}/">
+            <input type="hidden" name="command" value="processlogin">
 
-    <form method="post" action="${pageContext.servletContext.contextPath}/">
-        <input type="hidden" name="command" value="processlogin">
+            <h2 class="text-center">Log in</h2>
+            <div class="row justify-content-center">
 
-        <div class="row justify-content-center">
-            <div class="col-2">
-                <input type="text" name="email" required
+                <input class="form-control" type="text" name="email" required
                        pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9]+[\.][a-z]+$" placeholder="<fmt:message key="email"/>"/>
-            </div>
-        </div>
 
-        <div class="row justify-content-center">
-            <div class="col-2">
-                <input type="password" name="pass" required placeholder="<fmt:message key="pass"/>"/><br/>
             </div>
-        </div>
 
-        <div class="row justify-content-center">
-            <div class="col-2">
-                <input type="submit" class="btn btn-info"/>
-                <a href="?command=register"><fmt:message key="register"/></a>
+            <div class="row justify-content-center">
+
+                <input class="form-control" type="password" name="pass" required
+                       placeholder="<fmt:message key="pass"/>"/><br/>
+
             </div>
-        </div>
 
-    </form>
+            <div class="row justify-content-center">
+
+                <input type="submit" class="btn btn-info" value="Log In"/> <br/>
+                <a href="?command=signup"><fmt:message key="register"/></a>
+
+            </div>
+        </form>
+    </div>
 </div>
 
 </body>

@@ -40,8 +40,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> register(String email, String password) {
-        if (userValidator.validateEmail(email) && userValidator.validatePassword(password) && !userDao.findByEmail(email).isPresent()) {
+    public Optional<User> register(String email, String password, String confirmedPass) {
+
+        if (    userValidator.validatePasswordsAreSimilar(password, confirmedPass)
+                && userValidator.validateEmail(email)
+                && userValidator.validatePassword(password)
+                && !userDao.findByEmail(email).isPresent()         ) {
             String encryptPassword = passwordEncryption.encrypt(password);
             User userToSave = User.builder()
                     .withEmail(email)

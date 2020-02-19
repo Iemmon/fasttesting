@@ -6,4 +6,7 @@ public interface Validator<T> {
     boolean validateEmail(String email);
 
     boolean validatePassword(String password);
+
+    boolean validatePasswordsAreSimilar(String pass, String confPass);
+
 }

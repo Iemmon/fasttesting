@@ -27,6 +27,7 @@ import static org.mockito.Mockito.*;
 public class UserServiceImplTest {
     private static final String ENCODED_PASSWORD = "encoded_password";
     private static final String PASSWORD = "password";
+    private static final String CONFIRMED_PASSWORD = "password";
     private static final String USER_EMAIL = "user@gmail.com";
     private static final String INCORRECT_PASSWORD = "INCORRECT_PASSWORD";
     private static final String ENCODE_INCORRECT_PASSWORD = "encode_incorrect_password";
@@ -97,24 +98,26 @@ public class UserServiceImplTest {
 
         when(userValidator.validateEmail(eq(USER_EMAIL))).thenReturn(true);
         when(userValidator.validatePassword(eq(PASSWORD))).thenReturn(true);
+        when(userValidator.validatePasswordsAreSimilar(eq(PASSWORD), eq(CONFIRMED_PASSWORD))).thenReturn(true);
         when(userDao.findByEmail(anyString())).thenReturn(Optional.empty());
         when(passwordEncryption.encrypt(PASSWORD)).thenReturn(ENCODED_PASSWORD);
         when(userDao.save(any(User.class))).thenReturn(user);
 
-        Optional<User> registeredUser = userService.register(USER_EMAIL, PASSWORD);
+        Optional<User> registeredUser = userService.register(USER_EMAIL, PASSWORD, CONFIRMED_PASSWORD);
         assertTrue(registeredUser.isPresent());
 
         verify(userDao).save(eq(user));
         verify(userDao).findByEmail(anyString());
-        //verify(userDao).save(registeredUser.get());
+        verify(userDao).save(registeredUser.get());
     }
 
     @Test
     public void userShouldNotRegisterWithInvalidPasswordOrEmail() {
         when(userValidator.validateEmail(USER_EMAIL)).thenReturn(false);
         when(userValidator.validatePassword(PASSWORD)).thenReturn(false);
+        when(userValidator.validatePasswordsAreSimilar(PASSWORD, CONFIRMED_PASSWORD)).thenReturn(false);
 
-        Optional<User> registeredUser = userService.register(USER_EMAIL, PASSWORD);
+        Optional<User> registeredUser = userService.register(USER_EMAIL, PASSWORD, CONFIRMED_PASSWORD);
         assertFalse(registeredUser.isPresent());
 
         verify(userDao, times(0)).findByEmail((anyString()));
@@ -124,11 +127,15 @@ public class UserServiceImplTest {
 
     @Test
     public void userShouldNotRegisterAsEmailIsAlreadyUsed() {
-        when(userValidator.validate(any(User.class))).thenReturn(true);
-        when(userDao.findByEmail(anyString())).thenReturn(Optional.of(USER));
-        when(userDao.save(any(User.class))).thenReturn(any(User.class));
 
-        Optional<User> registeredUser = userService.register(USER_EMAIL, PASSWORD);
+        when(userValidator.validatePasswordsAreSimilar(anyString(), anyString())).thenReturn(true);
+        when(userValidator.validateEmail(eq(USER.getEmail()))).thenReturn(true);
+        when( userValidator.validatePassword(anyString())).thenReturn(true);
+
+        when(userDao.findByEmail(eq(USER.getEmail()))).thenReturn(Optional.of(USER));
+        when(userDao.save(any(User.class))).thenReturn(USER);
+
+        Optional<User> registeredUser = userService.register(USER_EMAIL, PASSWORD, CONFIRMED_PASSWORD);
         assertFalse(registeredUser.isPresent());
 
         verify(userDao, times(0)).save(any(User.class));

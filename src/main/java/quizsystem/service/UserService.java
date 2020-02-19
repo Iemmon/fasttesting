@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface UserService {
     Optional<User> login(String email, String password) throws DataBaseSqlRuntimeException;
 
-    Optional<User> register(String email, String password) throws DataBaseSqlRuntimeException;
+    Optional<User> register(String email, String password, String confPass) throws DataBaseSqlRuntimeException;
 
     Page<User> findAll(String page, int itemsPerPage);
 }

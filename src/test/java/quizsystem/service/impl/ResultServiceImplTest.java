@@ -6,6 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import quizsystem.dao.ResultDao;
+import quizsystem.dao.pagination.Page;
+import quizsystem.dao.pagination.PageRequest;
 import quizsystem.entity.Result;
 
 import java.util.ArrayList;
@@ -26,9 +28,11 @@ public class ResultServiceImplTest {
 
     @Test
     public void getAllResults() {
-        List<Result> results = new ArrayList<>();
-        when(resultDao.findAllByUserId(any(Long.class))).thenReturn(results);
-//        assertSame(results, resultService.getAllResults(5L));
+        Page<Result> results = mock(Page.class);
+        when(resultDao.countByUserId(anyLong())).thenReturn(16L);
+        when(resultDao.findAllByUserId(any(Long.class), any(PageRequest.class))).thenReturn(results);
+
+        assertSame(results, resultService.getAllResults(5L, "1", 5));
     }
 
     @Test
