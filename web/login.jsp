@@ -8,13 +8,12 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <%@include file="includes/resources.jsp" %>
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row ">
-        <div class="col-1 offset-10">
+    <div class="row justify-content-end">
+        <div class="col-1">
             <form>
                 <select id="language" name="language" onchange="submit()">
                     <option value="en" ${language == 'en' ? 'selected' : ''}><fmt:message key="en"/></option>
@@ -25,36 +24,40 @@
     </div>
 
     <c:if test="${has_error != null}">
-        <div class="row">
-            <div class="col-2 offset-3">
-                <p><fmt:message key="login-error"/></p>
+        <div class="row justify-content-center">
+            <div class="col-2">
+                <div class="alert alert-danger" role="alert">
+                    <p><fmt:message key="login-error"/></p>
+                </div>
             </div>
         </div>
     </c:if>
 
     <form method="post" action="${pageContext.servletContext.contextPath}/">
         <input type="hidden" name="command" value="processlogin">
-        <div class="row">
-            <div class="col-2 offset-5">
+
+        <div class="row justify-content-center">
+            <div class="col-2">
                 <input type="text" name="email" required
                        pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9]+[\.][a-z]+$" placeholder="<fmt:message key="email"/>"/>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-2 offset-5">
+        <div class="row justify-content-center">
+            <div class="col-2">
                 <input type="password" name="pass" required placeholder="<fmt:message key="pass"/>"/><br/>
             </div>
         </div>
-        <div class="row">
-            <div class="col-2 offset-5">
+
+        <div class="row justify-content-center">
+            <div class="col-2">
                 <input type="submit" class="btn btn-info"/>
                 <a href="?command=register"><fmt:message key="register"/></a>
             </div>
         </div>
+
     </form>
 </div>
-</div>
-</div>
+
 </body>
 </html>

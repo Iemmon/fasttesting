@@ -7,34 +7,38 @@
 <fmt:setBundle basename="localization"/>
 <html>
 <head>
-    <title>Tests</title>
+    <title>Home</title>
+    <%@include file="includes/resources.jsp" %>
 </head>
 <body>
-<form>
-    <input type="hidden" name="command" value="${param.command}"/>
-    <input type="hidden" name="page" value="${param.page}"/>
-    <input type="hidden" name="topic_id" value="${param.topic_id}"/>
-    <select id="language" name="language" onchange="submit()">
-        <option value="en" ${language == 'en' ? 'selected' : ''}><fmt:message key="en"/></option>
-        <option value="ru" ${language == 'ru' ? 'selected' : ''}><fmt:message key="ru"/></option>
-    </select>
-</form>
-<p><fmt:message key="choose-test"/></p>
-<jsp:useBean id="tests" scope="request" type="java.util.List"/>
-<c:forEach var="test" items="${tests}">
-    <tr>
-        <td>${test.getId()}</td>
-        <td><a href="?command=questions&test_id=${test.getId()}">${test.getName()}</a></td>
-        <br/>
-    </tr>
-</c:forEach>
-<table>
-    <tr>
-        <c:forEach begin="1" end="${maxPages}" var="i">
-            <td><a href="?command=${param.command}&topic_id=${param.topic_id}&page=${i}">${i}</a></td>
-        </c:forEach>
-    </tr>
-</table>
-<a href="?command=logout"> Logout </a>
+<%@include file="includes/header.jsp" %>
+<div class="container">
+    <div class="row">
+        <div class="col main-content">
+
+            <h3><fmt:message key="choose-test"/></h3>
+            <jsp:useBean id="tests" scope="request" type="java.util.List"/>
+
+            <ol class="two-columns">
+                <c:forEach var="test" items="${tests}">
+                    <li>
+                        <a href="?command=questions&test_id=${test.getId()}">${test.getName()}</a>
+                    </li>
+                </c:forEach>
+            </ol>
+
+            <c:if test="${maxPages > 1}" >
+                <ul class="pagination justify-content-center">
+                    <c:forEach begin="1" end="${maxPages}" var="i">
+                        <li class="page-item"><a class="page-link" href="?command=${param.command}&topic_id=${param.topic_id}&page=${i}">${i}</a></li>
+                    </c:forEach>
+                </ul>
+            </c:if>
+
+        </div>
+    </div>
+</div>
+
+<%@include file="includes/footer.jsp" %>
 </body>
 </html>

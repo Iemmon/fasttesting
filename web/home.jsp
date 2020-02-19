@@ -9,17 +9,24 @@
 <html>
 <head>
     <title>Home</title>
+    <%@include file="includes/resources.jsp" %>
 </head>
 <body>
-<form>
-    <select id="language" name="language" onchange="submit()">
-        <option value="en" ${language == 'en' ? 'selected' : ''}><fmt:message key="en"/></option>
-        <option value="ru" ${language == 'ru' ? 'selected' : ''}><fmt:message key="ru"/></option>
-    </select>
-</form>
-<c:if test="${sessionScope.currentUser.role eq 'ADMIN'}"><a href="?command=users"> View user list </a></c:if> <br/>
-<c:if test="${sessionScope.currentUser.role eq 'STUDENT'}"><a href="?command=results"> View results </a></c:if> <br/>
-<c:if test="${sessionScope.currentUser.role eq 'STUDENT'}"><a href="?command=topics"> Take a test </a></c:if> <br/>
-<a href="?command=logout"> Logout </a>
+<%@include file="includes/header.jsp" %>
+<div class="container">
+    <div class="row">
+        <div class="col main-content">
+
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4">Hello!</h1>
+                    <p class="lead">Welcome to the best quiz website! Enjoy out variaty of different questions in JAVA, SQL and other topics. I have spent sooo many hours collecting questions for these tests.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%@include file="includes/footer.jsp" %>
 </body>
 </html>

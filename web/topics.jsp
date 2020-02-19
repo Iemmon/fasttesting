@@ -8,25 +8,24 @@
 <html>
 <head>
     <title>Topics</title>
+    <%@include file="includes/resources.jsp" %>
 </head>
 <body>
-<form>
-    <input type="hidden" name="command" value="${param.command}"/>
-    <select id="language" name="language" onchange="submit()">
-        <option value="en" ${language == 'en' ? 'selected' : ''}><fmt:message key="en"/></option>
-        <option value="ru" ${language == 'ru' ? 'selected' : ''}><fmt:message key="ru"/></option>
-    </select>
-</form>
-<p><fmt:message key="choose-topic"/></p>
-<jsp:useBean id="topics" scope="request" type="java.util.List"/>
-<table>
-<c:forEach var="topic" items="${topics}">
-    <tr>
-        <td>${topic.getId()}</td>
-        <td><a href="?command=tests&topic_id=${topic.getId()}">${topic.getTopicName()}</a></td>
-    </tr>
-</c:forEach>
-</table>
-<a href="?command=logout"> Logout </a>
+<%@include file="includes/header.jsp" %>
+<div class="container">
+    <div class="row">
+        <div class="col main-content">
+            <h3><fmt:message key="choose-topic"/></h3>
+            <jsp:useBean id="topics" scope="request" type="java.util.List"/>
+            <ol class="two-columns">
+                <c:forEach var="topic" items="${topics}">
+                    <li><a href="?command=tests&topic_id=${topic.getId()}">${topic.getTopicName()}</a></li>
+                </c:forEach>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<%@include file="includes/footer.jsp" %>
 </body>
 </html>

@@ -7,40 +7,47 @@
 <fmt:setBundle basename="localization"/>
 <html>
 <head>
-    <title>Title</title>
+    <title>Home</title>
+    <%@include file="includes/resources.jsp" %>
 </head>
 <body>
-<form>
-    <input type="hidden" name="page" value="${param.page}"/>
-    <input type="hidden" name="command" value="${param.command}"/>
-    <select id="language" name="language" onchange="submit()">
-        <option value="en" ${language == 'en' ? 'selected' : ''}><fmt:message key="en"/></option>
-        <option value="ru" ${language == 'ru' ? 'selected' : ''}><fmt:message key="ru"/></option>
-    </select>
-</form>
-<table>
-    <tr>
-        <th><fmt:message key="user-id"/></th>
-        <th><fmt:message key="user-email"/></th>
-    </tr>
-    <jsp:useBean id="users" scope="request" type="java.util.List"/>
-    <c:forEach var="user" items="${users}">
-        <tr>
-            <td>${user.getUserId()}</td>
-            <td><a href="?command=userdetails&user=${user.getUserId()}">${user.getEmail()}</a></td>
-            <td>${user.getAverageMark()}</td>
-                <td>${user.getRole()}</td>
-        </tr>
-    </c:forEach>
-</table>
-<table>
-    <tr>
-        <c:forEach begin="1" end="${maxPages}" var="i">
-            <td><a href="?command=${param.command}&page=${i}">${i}</a></td>
-        </c:forEach>
-    </tr>
-</table>
+<%@include file="includes/header.jsp" %>
+<div class="container">
+    <div class="row">
+        <div class="col main-content">
 
-<a href="?command=home"> Home </a>
+            <jsp:useBean id="users" scope="request" type="java.util.List"/>
+            <table  class="generic-table">
+                <tr>
+                    <th><fmt:message key="user-id"/></th>
+                    <th><fmt:message key="user-email"/></th>
+                    <th>Mark</th>
+                    <th>Role</th>
+                </tr>
+
+                <c:forEach var="user" items="${users}">
+                    <tr>
+                        <td>${user.getUserId()}</td>
+                        <td><a href="?command=userdetails&user=${user.getUserId()}">${user.getEmail()}</a></td>
+                        <td>${user.getAverageMark()}</td>
+                        <td>${user.getRole()}</td>
+                    </tr>
+                </c:forEach>
+
+            </table>
+
+            <c:if test="${maxPages > 1}" >
+                <ul class="pagination justify-content-center">
+                    <c:forEach begin="1" end="${maxPages}" var="i">
+                        <li class="page-item"><a class="page-link" href="?command=${param.command}&page=${i}">${i}</a></li>
+                    </c:forEach>
+                </ul>
+            </c:if>
+
+        </div>
+    </div>
+</div>
+
+<%@include file="includes/footer.jsp" %>
 </body>
 </html>

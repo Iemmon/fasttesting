@@ -1,0 +1,67 @@
+.login-form,.registration-form {
+    border: 1px solid #76a2ff;
+    padding: 40px;
+    width: 400px;
+    margin: 100px auto;
+    display: block;
+    background-color: lightblue;
+}
+
+.error {
+    padding: 40px;
+    width: 700px;
+    margin: 100px auto;
+    display: block;
+}
+
+header{
+    margin-bottom: 20px;
+}
+
+footer{
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.two-columns {
+    column-count: 2;
+    column-gap: 20px;
+}
+
+.main-content{
+    margin-bottom: 20px;
+}
+
+.question{
+    font-size: 18px;
+}
+
+.question-item{
+    margin-bottom: 10px;
+}
+
+.question-item input {
+    margin-right: 10px;
+}
+
+.pages {
+    margin: 20px auto;
+}
+
+.pages td{
+    padding: 10px;
+    font-color: grey;
+}
+
+.generic-table{
+    margin: 20px auto;
+    width: 60%;
+}
+
+.generic-table td{
+    padding: 10px
+}
+
+.generic-table tr:nth-child(even){
+    background-color: #f8f9fa;
+}
