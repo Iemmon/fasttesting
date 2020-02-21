@@ -21,13 +21,13 @@ import static org.mockito.Mockito.*;
 public class LoadQuestionsCommandTest {
 
     @Mock
-    public QuestionService questionService;
+    private QuestionService questionService;
 
     @InjectMocks
-    public LoadQuestionsCommand command;
+    private LoadQuestionsCommand command;
 
     @Mock
-    public HttpServletRequest request;
+    private HttpServletRequest request;
 
     @Test
     public void executeTest() {

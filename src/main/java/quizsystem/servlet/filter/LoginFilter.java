@@ -19,27 +19,13 @@ public class LoginFilter implements Filter {
         String command = request.getParameter("command");
         User currentUser = (User) session.getAttribute("currentUser");
 
-        if(
+        if (
                 currentUser != null ||
-                (currentUser == null && command != null && (command.contentEquals("login") || command.contentEquals("signup") || command.contentEquals("processlogin") || command.contentEquals("register")))
-        ){
-            filterChain.doFilter(servletRequest, servletResponse);
-        }  else {
-            ((HttpServletResponse) servletResponse).sendRedirect(request.getContextPath() + "/?command=login");
-        }
-
-        /*if (command != null && ()) {
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
-        }
-
-        if (command == null || (session.getAttribute("currentUser") == null && command.contentEquals("login")) ) {
-
-        } /*else if(session.getAttribute("currentUser") == null && (command.contentEquals("signup"))) {
-            //((HttpServletResponse) servletResponse).sendRedirect(request.getContextPath() + "/?command=signup");
+                        (command != null && (command.contentEquals("login") || command.contentEquals("signup") || command.contentEquals("processlogin") || command.contentEquals("register")))
+        ) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-
-        }*/
+            ((HttpServletResponse) servletResponse).sendRedirect(request.getContextPath() + "/?command=login");
+        }
     }
 }

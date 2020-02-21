@@ -22,16 +22,16 @@ import static org.mockito.Mockito.*;
 public class RegisterCommandTest {
 
     @Mock
-    public UserService userService;
+    private UserService userService;
 
     @InjectMocks
-    public RegisterCommand registerCommand;
+    private RegisterCommand registerCommand;
 
     @Mock
-    public HttpServletRequest request;
+    private HttpServletRequest request;
 
     @Mock
-    HttpSession session;
+    private HttpSession session;
 
     @Test
     public void executeShouldReturnJSPFileName() {

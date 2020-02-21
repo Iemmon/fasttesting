@@ -13,25 +13,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ResultDaoImplTest {
 
-    Class<ApplicationInjector> injectorClass;
-    Field resultDao;
-    ResultDaoImpl resultDaoObject;
+    private ResultDaoImpl resultDaoObject;
 
     @Mock
     ResultSet resultSet;
 
     @Before
     public void setUp() throws NoSuchFieldException, IllegalAccessException {
-        injectorClass = ApplicationInjector.class;
-        resultDao = injectorClass.getDeclaredField("RESULT_DAO");
+        Class<ApplicationInjector> injectorClass = ApplicationInjector.class;
+        Field resultDao = injectorClass.getDeclaredField("RESULT_DAO");
         resultDao.setAccessible(true);
         resultDaoObject = (ResultDaoImpl) resultDao.get(null);
     }
@@ -47,7 +44,7 @@ public class ResultDaoImplTest {
     @Test
     public void findAllByUserIdShouldReturnListOfResults() {
         List<Result> resultList = resultDaoObject.findAllByUserId(1L);
-        assertEquals(3, resultList.size());
+        assertTrue(resultList.size() > 0);
     }
 
     @Test

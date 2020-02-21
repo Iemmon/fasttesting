@@ -19,13 +19,13 @@ import static org.mockito.Mockito.verify;
 public class XSSFilterTest {
 
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
 
     @Mock
-    HttpServletResponse response;
+    private HttpServletResponse response;
 
     @Mock
-    FilterChain filterChain;
+    private FilterChain filterChain;
 
     @Test
     public void testXSSFilter() throws IOException, ServletException {

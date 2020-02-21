@@ -37,7 +37,7 @@
         <form method="post" action="${pageContext.servletContext.contextPath}/">
             <input type="hidden" name="command" value="processlogin">
 
-            <h2 class="text-center">Log in</h2>
+            <h2 class="text-center"><fmt:message key="login"/></h2>
             <div class="row justify-content-center">
 
                 <input class="form-control" type="text" name="email" required
@@ -54,7 +54,7 @@
 
             <div class="row justify-content-center">
 
-                <input type="submit" class="btn btn-info" value="Log In"/> <br/>
+                <input type="submit" class="btn btn-info" value="<fmt:message key="login"/>"/> <br/>
                 <a href="?command=signup"><fmt:message key="register"/></a>
 
             </div>

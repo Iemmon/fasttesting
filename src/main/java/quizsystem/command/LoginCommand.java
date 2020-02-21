@@ -18,6 +18,7 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) {
         final String email = request.getParameter("email");
         final String password = request.getParameter("pass");
+
         Optional<User> user = userService.login(email, password);
         if(user.isPresent()) {
             final HttpSession session = request.getSession();

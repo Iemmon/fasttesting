@@ -11,14 +11,12 @@ import static org.junit.Assert.assertEquals;
 
 public class TestDaoImplTest {
 
-    Class<ApplicationInjector> injectorClass;
-    Field testDao;
-    TestDaoImpl testDaoObject;
+    private TestDaoImpl testDaoObject;
 
     @Before
     public void setup() throws NoSuchFieldException, IllegalAccessException {
-        injectorClass = ApplicationInjector.class;
-        testDao = injectorClass.getDeclaredField("TEST_DAO");
+        Class<ApplicationInjector> injectorClass = ApplicationInjector.class;
+        Field testDao = injectorClass.getDeclaredField("TEST_DAO");
         testDao.setAccessible(true);
         testDaoObject = (TestDaoImpl) testDao.get(null);
     }

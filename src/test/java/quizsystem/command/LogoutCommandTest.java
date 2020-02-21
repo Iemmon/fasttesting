@@ -15,13 +15,13 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class LogoutCommandTest {
 
-    LogoutCommand logoutCommand = new LogoutCommand();
+    private LogoutCommand logoutCommand = new LogoutCommand();
 
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
 
     @Mock
-    HttpSession session;
+    private HttpSession session;
 
     @Test
     public void executeShouldRedirectToLoginPage() {

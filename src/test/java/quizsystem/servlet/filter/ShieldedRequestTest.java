@@ -17,10 +17,10 @@ import static org.mockito.Mockito.*;
 public class ShieldedRequestTest {
 
     @InjectMocks
-    ShieldedRequest shieldedRequest;
+    private ShieldedRequest shieldedRequest;
 
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
 
     @Test
     public void getParameterValues() {

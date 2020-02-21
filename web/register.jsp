@@ -38,7 +38,7 @@
         <form method="post" action="${pageContext.servletContext.contextPath}/">
             <input type="hidden" name="command" value="register">
 
-            <h2 class="text-center">Sign Up</h2>
+            <h2 class="text-center"><fmt:message key="signup"/></h2>
             <div class="row justify-content-center">
                     <input type="text" name="email" required
                            pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9]+[\.][a-z]+$" placeholder="<fmt:message key="email"/>"/>

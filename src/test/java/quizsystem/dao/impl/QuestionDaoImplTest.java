@@ -12,17 +12,14 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(MockitoJUnitRunner.class)
 public class QuestionDaoImplTest {
 
-    Class<ApplicationInjector> injectorClass;
-    Field questionDao;
-    QuestionDaoImpl questionDaoImpl;
+    private QuestionDaoImpl questionDaoImpl;
 
     @Before
     public void setUp() throws NoSuchFieldException, IllegalAccessException {
-        injectorClass = ApplicationInjector.class;
-        questionDao = injectorClass.getDeclaredField("QUESTION_DAO");
+        Class<ApplicationInjector> injectorClass = ApplicationInjector.class;
+        Field questionDao = injectorClass.getDeclaredField("QUESTION_DAO");
         questionDao.setAccessible(true);
         questionDaoImpl = (QuestionDaoImpl) questionDao.get(null);
     }

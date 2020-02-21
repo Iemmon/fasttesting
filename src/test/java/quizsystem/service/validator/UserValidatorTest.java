@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Parameterized.class)
 public class UserValidatorTest {
 
-    UserValidator validator = new UserValidator();
+    private UserValidator validator = new UserValidator();
 
     @Parameterized.Parameter
     public String emailForTrue;

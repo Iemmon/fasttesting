@@ -26,19 +26,18 @@ import static org.mockito.Mockito.*;
 public class LoginFilterTest {
 
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
 
     @Mock
-    HttpServletResponse response;
+    private HttpServletResponse response;
 
     @Mock
-    HttpSession session;
+    private HttpSession session;
 
     @Mock
-    FilterChain filterChain;
+    private FilterChain filterChain;
 
-    LoginFilter loginFilter = new LoginFilter();
-
+    private LoginFilter loginFilter = new LoginFilter();
 
     @Test
     public void testLogin () throws IOException, ServletException {

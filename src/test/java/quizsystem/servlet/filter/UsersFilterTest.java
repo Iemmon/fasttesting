@@ -21,16 +21,16 @@ import static org.mockito.Mockito.*;
 public class UsersFilterTest {
 
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
 
     @Mock
-    HttpServletResponse response;
+    private HttpServletResponse response;
 
     @Mock
-    FilterChain filterChain;
+    private FilterChain filterChain;
 
     @Mock
-    HttpSession session;
+    private HttpSession session;
 
     @Test
     public void testAccessWithStudentRole() throws IOException, ServletException {

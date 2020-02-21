@@ -42,16 +42,6 @@ public class ResultsCommandTest {
     @InjectMocks
     private ResultsCommand resultsCommand;
 
-
-
-//    User user = (User) request.getSession().getAttribute("currentUser");
-//        int itemsPerPage = Integer.parseInt(resourceBundle.getString("itemsPerPage"));
-//        String page = request.getParameter("page");
-//        Page <Result> results = resultService.getAllResults(user.getUserId(), page, itemsPerPage);
-//        request.setAttribute("results", results.getItems());
-//        request.setAttribute("maxPages", results.getMaxPageNumber());
-//        return "results.jsp";
-
     @Test
     public void executeShouldRedirectToResultsPage() {
         User user = User.builder().withId(1L).build();
