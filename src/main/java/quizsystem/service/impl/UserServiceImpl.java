@@ -26,9 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> login(String email, String password) {
-        if (!userValidator.validateEmail(email)) {
-            return Optional.empty();
-        }
+
         Optional<User> user = userDao.findByEmail(email);
         if (user.isPresent()) {
             String encryptPassword = passwordEncryption.encrypt(password);

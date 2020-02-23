@@ -1,9 +1,9 @@
 package quizsystem.dao.impl;
 
 import org.apache.log4j.Logger;
+import quizsystem.dao.UserDao;
 import quizsystem.dao.connectionpool.ConnectionPool;
 import quizsystem.dao.exception.DataBaseSqlRuntimeException;
-import quizsystem.dao.UserDao;
 import quizsystem.dao.pagination.Page;
 import quizsystem.dao.pagination.PageRequest;
 import quizsystem.entity.Role;
@@ -21,7 +21,6 @@ import java.util.function.BiConsumer;
 public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
     protected static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
 
-    private static final String FIND_WITH_PAGINATION_QUERY = "SELECT * FROM users LIMIT ? OFFSET ?";
     private static final String FIND_BY_EMAIL_QUERY = "SELECT * FROM users WHERE email=?";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM users WHERE id=?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM users";
@@ -34,7 +33,8 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
         try {
             preparedStatement.setString(1, string);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error("Cannot set parameter to PreparedStatement", e);
+            throw new DataBaseSqlRuntimeException("Cannot set parameter to PreparedStatement", e);
         }
     });
 
@@ -62,7 +62,8 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error("Cannot execute find all query", e);
+            throw new DataBaseSqlRuntimeException("Cannot execute find all query", e);
         }
         return new Page<>(entities, pageRequest.getPageNumber(), pageRequest.getItemsPerPage(), pageRequest.getMaxPages());
     }
@@ -76,6 +77,7 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
+                LOGGER.error("Creating user failed, no rows affected.");
                 throw new SQLException("Creating user failed, no rows affected.");
             }
             return getUserByGeneratedKey(preparedStatement, entity);

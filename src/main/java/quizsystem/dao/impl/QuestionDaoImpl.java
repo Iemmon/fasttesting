@@ -3,15 +3,11 @@ package quizsystem.dao.impl;
 import org.apache.log4j.Logger;
 import quizsystem.dao.QuestionDao;
 import quizsystem.dao.connectionpool.ConnectionPool;
-import quizsystem.dao.exception.DataBaseSqlRuntimeException;
 import quizsystem.entity.Answer;
 import quizsystem.entity.Question;
-import quizsystem.entity.User;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 

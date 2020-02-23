@@ -42,12 +42,17 @@
                             <c:choose>
 
                                 <c:when test="${ans.contains(answer.getId()) && !answer.isCorrect()}">
-                                    <div style="color: #ff8079">${answer.getAnswerOption()}</div>
+                                    <div style="color: #ff8079"><strong>${answer.getAnswerOption()}</strong></div>
+                                </c:when>
+
+                                <c:when test="${ans.contains(answer.getId()) && answer.isCorrect()}">
+                                    <div style="color: #3aae39"><strong>${answer.getAnswerOption()}</strong></div>
                                 </c:when>
 
                                 <c:when test="${answer.isCorrect()}">
                                     <div style="color: #3aae39">${answer.getAnswerOption()}</div>
                                 </c:when>
+
 
                                 <c:otherwise>
                                     <div>${answer.getAnswerOption()}</div>

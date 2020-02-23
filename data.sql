@@ -1,22 +1,24 @@
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS answers;
 DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS tests;
 DROP TABLE IF EXISTS topics;
 DROP TABLE IF EXISTS results;
 DROP TABLE IF EXISTS users;
+SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE `users` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(255) NOT NULL,
-  `password` VARCHAR(32) NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(320) NOT NULL,
+  `password` VARCHAR(60) NOT NULL,
   `role` VARCHAR(45) DEFAULT 'STUDENT' NOT NULL,
   PRIMARY KEY (`id`));
 
 CREATE TABLE `results` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `score` INT(11) NOT NULL,
-  `test_id` INT(11) NOT NULL,
-  `user_id` INT(11) NOT NULL,
+  `test_id` BIGINT NOT NULL,
+  `user_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_user_id`
     FOREIGN KEY (`user_id`)
@@ -25,14 +27,14 @@ CREATE TABLE `results` (
     ON UPDATE CASCADE);
 
 CREATE TABLE `topics` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 
 CREATE TABLE `tests` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `topic_id` INT(11) NULL,
+  `topic_id` BIGINT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_topics_id`
     FOREIGN KEY (`topic_id`)
@@ -41,9 +43,9 @@ CREATE TABLE `tests` (
     ON UPDATE CASCADE);
 
 CREATE TABLE `questions` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `question_text` TEXT NOT NULL,
-  `test_id` INT(11) NULL,
+  `test_id` BIGINT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_test_id`
     FOREIGN KEY (`test_id`)
@@ -52,17 +54,17 @@ CREATE TABLE `questions` (
     ON UPDATE CASCADE);
 
 CREATE TABLE `answers` (
-  `id` INT(11) NOT NULL  AUTO_INCREMENT,
+  `id` BIGINT NOT NULL  AUTO_INCREMENT,
   `answer_text` VARCHAR(255) NOT NULL,
   `is_correct` TINYINT(1) NULL,
-  `question_id` INT(11) NULL,
+  `question_id` BIGINT NULL,
   PRIMARY KEY (`id`),
     CONSTRAINT `fk_question_id`
     FOREIGN KEY (`question_id`)
     REFERENCES `questions` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-
+    
 INSERT INTO users(id, email, password, role) VALUES (1, 'pavelorlov@gmail.com', 'Fjb7cil1M', 'STUDENT');
 INSERT INTO users(id, email, password, role) VALUES (2, 'nadezhdamyronova@yahoo.com', '1sjR4vdao', 'STUDENT');
 INSERT INTO users(id, email, password, role) VALUES (3, 'tatyana@yahoo.com', 'NICrifw3', 'STUDENT');
@@ -276,7 +278,7 @@ INSERT INTO answers(id, answer_text, is_correct, question_id) VALUES (102, 'fina
 INSERT INTO questions(id, question_text, test_id) VALUES (29, 'Which two statements are true for any concrete class implementing the java.lang.Runnable interface?
     1. You can extend the Runnable interface as long as you override the public run() method.
     2. The class must contain a method called run() from which all code for that thread will be initiated.
-    3. The class must contain an empty public void method named run().
+    3. The class must contain an empty public void method named run().questions
     4. The class must contain a public void method named runnable().
     5. The class definition must include the words implements Threads and contain a method called run().
     6. The mandatory method must be public, with a return type of void, must be called run(), and cannot take any arguments.', 3);

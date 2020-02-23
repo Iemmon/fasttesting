@@ -25,10 +25,4 @@ public class ResultServiceImpl implements ResultService {
         PageRequest pageRequest = PageRequestParser.parseIntoPageRequest(page, resultDao.countByUserId(userId));
         return resultDao.findAllByUserId(userId, pageRequest);
     }
-
-//       @Override
-//    public Page<Result> findAll(String page, int itemsPerPage) {
-//        PageRequest pageRequest = PageRequestParser.parseIntoPageRequest(page, userDao.count());
-//        return userDao.findAll(pageRequest);
-//    }
 }

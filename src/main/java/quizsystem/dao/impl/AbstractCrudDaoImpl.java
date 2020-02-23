@@ -1,8 +1,8 @@
 package quizsystem.dao.impl;
 
 import org.apache.log4j.Logger;
-import quizsystem.dao.connectionpool.ConnectionPool;
 import quizsystem.dao.CrudDao;
+import quizsystem.dao.connectionpool.ConnectionPool;
 import quizsystem.dao.exception.DataBaseSqlRuntimeException;
 import quizsystem.dao.pagination.Page;
 import quizsystem.dao.pagination.PageRequest;
@@ -15,12 +15,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
-
 public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
     protected static final Logger LOGGER = Logger.getLogger(AbstractCrudDaoImpl.class);
-
-    protected final ConnectionPool pool;
     private final String findByIdQuery;
+    protected final ConnectionPool pool;
     private final String findAll;
     private final String countAll;
     protected final BiConsumer<PreparedStatement, Long> LONG_PARAM_SETTER = ((preparedStatement, number) -> {
@@ -80,7 +78,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
             preparedStatement.setInt(2, request.getItemsPerPage());
             preparedStatement.setInt(3, (request.getPageNumber() - 1) * request.getItemsPerPage());
             return getPageFromResultSet(preparedStatement, request);
-        } catch (SQLException e) {e.printStackTrace();
+        } catch (SQLException e) {
             LOGGER.warn(String.format(findByParam + " failed", e));
             throw new DataBaseSqlRuntimeException("Nothing was found", e);
         }
@@ -106,7 +104,6 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
             }
             return entities;
         } catch (SQLException e) {
-            e.printStackTrace();
             LOGGER.warn(String.format("Unable to get data from result set", e));
             throw new DataBaseSqlRuntimeException("Unable to get data from result set", e);
         }
@@ -121,7 +118,6 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
             }
             return new Page(entities, request.getPageNumber(), request.getItemsPerPage(), request.getMaxPages());
         } catch (SQLException e) {
-            e.printStackTrace();
             LOGGER.warn(String.format("Unable to get data from result set", e));
             throw new DataBaseSqlRuntimeException("Unable to get data from result set", e);
         }
@@ -137,7 +133,6 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
                 return 0L;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             LOGGER.warn(String.format(countAll + " failed", e));
             throw new DataBaseSqlRuntimeException("Count failed", e);
         }
@@ -151,7 +146,6 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
             }
             return 0;
         } catch (SQLException e) {
-            e.printStackTrace();
             LOGGER.warn(String.format(countAll + " failed", e));
             throw new DataBaseSqlRuntimeException("Count failed", e);
         }

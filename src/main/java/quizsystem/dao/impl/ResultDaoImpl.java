@@ -42,8 +42,7 @@ public class ResultDaoImpl extends AbstractCrudDaoImpl<Result> implements Result
             }
             return getResultByGeneratedKey(preparedStatement, entity);
         } catch (SQLException e) {
-            e.printStackTrace();
-            LOGGER.warn(String.format(SAVE_QUERY + " failed", e));
+            LOGGER.error("Exception in save() method", e);
             throw new DataBaseSqlRuntimeException("Result saving failed", e);
         }
     }
@@ -74,6 +73,7 @@ public class ResultDaoImpl extends AbstractCrudDaoImpl<Result> implements Result
             if (generatedKeys.next()) {
                 return new Result(generatedKeys.getLong(1), entity.getScore(), entity.getTest(), entity.getUserId());
             } else {
+                LOGGER.error("Result creation failed, no ID obtained. getResultByGeneratedKey()");
                 throw new SQLException("Result creation failed, no ID obtained.");
             }
         }
