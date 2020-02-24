@@ -12,7 +12,6 @@ To run this project you need:
 ```
 Java 1.8 or newer
 MySql 5.7 or newer
-Tomcat 9.0.30 or newer
 Maven 3.6.0 or newer
 ```
 
