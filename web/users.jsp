@@ -17,12 +17,12 @@
         <div class="col main-content">
 
             <jsp:useBean id="users" scope="request" type="java.util.List"/>
-            <table  class="generic-table">
+            <table class="generic-table">
                 <tr>
                     <th><fmt:message key="user-id"/></th>
                     <th><fmt:message key="user-email"/></th>
-                    <th>Mark</th>
-                    <th>Role</th>
+                    <th><fmt:message key="average-mark"/></th>
+                    <th><fmt:message key="role"/></th>
                 </tr>
 
                 <c:forEach var="user" items="${users}">
@@ -36,10 +36,11 @@
 
             </table>
 
-            <c:if test="${maxPages > 1}" >
+            <c:if test="${maxPages > 1}">
                 <ul class="pagination justify-content-center">
                     <c:forEach begin="1" end="${maxPages}" var="i">
-                        <li class="page-item"><a class="page-link" href="?command=${param.command}&page=${i}">${i}</a></li>
+                        <li class="page-item"><a class="page-link" href="?command=${param.command}&page=${i}">${i}</a>
+                        </li>
                     </c:forEach>
                 </ul>
             </c:if>

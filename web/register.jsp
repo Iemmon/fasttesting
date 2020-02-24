@@ -25,13 +25,13 @@
     </div>
 
     <c:if test="${has_error eq true}">
-        <div class="row justify-content-center">
-            <div class="col">
-                <div class="alert alert-danger" role="alert">
-                    <fmt:message key="pass-doesnt-match"/>
-                </div>
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="alert alert-danger" role="alert">
+                <fmt:message key="pass-doesnt-match"/>
             </div>
         </div>
+    </div>
     </c:if>
 
     <div class="login-form">
@@ -40,21 +40,22 @@
 
             <h2 class="text-center"><fmt:message key="signup"/></h2>
             <div class="row justify-content-center">
-                    <input type="text" name="email" required
-                           pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9]+[\.][a-z]+$" placeholder="<fmt:message key="email"/>"/>
+                <input type="text" name="email" required
+                       pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9]+[\.][a-z]+$" placeholder="<fmt:message key="email"/>"/>
             </div>
 
             <div class="row justify-content-center">
-                    <input type="password" name="pass" placeholder="<fmt:message key="pass"/>" id="password" required />
+                <input type="password" name="pass" placeholder="<fmt:message key="pass"/>" id="password" required/>
             </div>
 
             <div class="row justify-content-center">
-                    <input type="password" name="confpass" placeholder="<fmt:message key="confirm-pass"/>" id="confirm_password" required/>
+                <input type="password" name="confpass" placeholder="<fmt:message key="confirm-pass"/>"
+                       id="confirm_password" required/>
             </div>
 
             <div class="row justify-content-center">
-                    <button type="submit" class="btn btn-info"><fmt:message key="register"/></button>
-                    <a href="?command=login"><fmt:message key="login"/></a>
+                <button type="submit" class="btn btn-info"><fmt:message key="register"/></button>
+                <a href="?command=login"><fmt:message key="login"/></a>
             </div>
 
         </form>

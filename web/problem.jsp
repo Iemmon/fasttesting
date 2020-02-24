@@ -14,8 +14,8 @@
     <div class="row">
         <div class="col">
             <div class="alert alert-danger" role="alert">
-                Error! RUN FOR YOUR LIFE!!!!!
-                <a href="?command=home">Return to main page</a>
+                <fmt:message key="general-error"/>
+                <a href="?command=home"><fmt:message key="return-to-main"/></a>
             </div>
         </div>
     </div>

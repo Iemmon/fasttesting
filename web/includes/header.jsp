@@ -17,24 +17,24 @@
     <ul class="navbar-nav mr-auto">
 
         <c:if test="${sessionScope.currentUser.role eq 'ADMIN'}">
-            <li class="nav-item"><a class="nav-link" href="?command=users">Users</a></li>
+            <li class="nav-item"><a class="nav-link" href="?command=users"><fmt:message key="users"/></a></li>
         </c:if>
 
         <c:if test="${sessionScope.currentUser.role eq 'STUDENT'}">
-            <li class="nav-item"><a class="nav-link" href="?command=topics">Topics</a></li>
+            <li class="nav-item"><a class="nav-link" href="?command=topics"><fmt:message key="topics"/></a></li>
         </c:if>
 
         <c:if test="${sessionScope.currentUser.role eq 'STUDENT'}">
-            <li class="nav-item"><a class="nav-link" href="?command=results">Results</a></li>
+            <li class="nav-item"><a class="nav-link" href="?command=results"><fmt:message key="results"/></a></li>
         </c:if>
 
-        <li class="nav-item"><a class="nav-link" href="?command=logout">Logout</a></li>
+        <li class="nav-item"><a class="nav-link" href="?command=logout"><fmt:message key="logout"/></a></li>
     </ul>
     <form class="form-inline">
         <select name="language" onchange="changeLang()">
-            <option value="">select language</option>
-            <option value="en">English</option>
-            <option value="ru">Russian</option>
+            <option value=""><fmt:message key="select-lang"/></option>
+            <option value="en"><fmt:message key="en"/></option>
+            <option value="ru"><fmt:message key="ru"/></option>
         </select>
     </form>
 </nav>

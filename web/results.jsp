@@ -33,10 +33,12 @@
             </table>
 
 
-            <c:if test="${maxPages > 1}" >
+            <c:if test="${maxPages > 1}">
                 <ul class="pagination justify-content-center">
                     <c:forEach begin="1" end="${maxPages}" var="i">
-                        <li class="page-item"><a class="page-link" href="?command=${param.command}&page=${i}&user=${param.user}">${i}</a></li>
+                        <li class="page-item"><a class="page-link"
+                                                 href="?command=${param.command}&page=${i}&user=${param.user}">${i}</a>
+                        </li>
                     </c:forEach>
                 </ul>
             </c:if>

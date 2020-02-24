@@ -30,7 +30,7 @@
                     </c:forEach>
                 </ol>
                 <input type="hidden" value="${param.test_id}" name="test_id"/>
-                <input type="submit"/>
+                <input type="submit" text=" <fmt:message key="submit"/>"/>
                 <input type="hidden" name="command" value="result">
             </form>
         </div>
