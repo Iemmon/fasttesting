@@ -51,6 +51,8 @@ public class ApplicationInjector {
 
     private static final ResultService RESULT_SERVICE = new ResultServiceImpl(RESULT_DAO);
 
+    private static final MailSender MAIL_SENDER = new MailSenderImpl();
+
     private static final Command LOGIN_COMMAND = new LoginCommand(USER_SERVICE);
 
     private static final Command LOGOUT_COMMAND = new LogoutCommand();
@@ -59,7 +61,7 @@ public class ApplicationInjector {
 
     private static final Command USER_RESULTS_COMMAND = new ResultsCommand(RESULT_SERVICE, RESOURCE_FILE);
 
-    private static final Command CALCULATE_RESULT_COMMAND = new CalculateResultCommand(QUESTION_SERVICE, RESULT_SERVICE);
+    private static final Command CALCULATE_RESULT_COMMAND = new CalculateResultCommand(QUESTION_SERVICE, RESULT_SERVICE, MAIL_SENDER);
 
     private static final Command TEST_COMMAND = new TestCommand(TEST_SERVICE, RESOURCE_FILE);
 

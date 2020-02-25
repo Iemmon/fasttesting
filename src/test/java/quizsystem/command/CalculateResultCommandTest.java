@@ -8,6 +8,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import quizsystem.entity.Question;
 import quizsystem.entity.Result;
 import quizsystem.entity.User;
+import quizsystem.service.MailSender;
 import quizsystem.service.QuestionService;
 import quizsystem.service.ResultService;
 
@@ -35,6 +36,9 @@ public class CalculateResultCommandTest {
 
     @Mock
     private HttpSession session;
+
+    @Mock
+    private MailSender mailSender;
 
     @InjectMocks
     private CalculateResultCommand command;

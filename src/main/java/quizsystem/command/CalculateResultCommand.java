@@ -4,6 +4,8 @@ import quizsystem.entity.Question;
 import quizsystem.entity.Result;
 import quizsystem.entity.Test;
 import quizsystem.entity.User;
+import quizsystem.service.MailSender;
+import quizsystem.service.impl.MailSenderImpl;
 import quizsystem.service.QuestionService;
 import quizsystem.service.ResultService;
 
@@ -16,11 +18,13 @@ public class CalculateResultCommand implements Command {
 
     private final QuestionService questionService;
     private final ResultService resultService;
+    private final MailSender mailSender;
 
 
-    public CalculateResultCommand(QuestionService questionService, ResultService resultService) {
+    public CalculateResultCommand(QuestionService questionService, ResultService resultService, MailSender mailSender) {
         this.questionService = questionService;
         this.resultService = resultService;
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -29,7 +33,8 @@ public class CalculateResultCommand implements Command {
 
         Long testId = Long.parseLong(request.getParameter("test_id"));
         Test test = new Test(testId);
-        Long userId = ((User)request.getSession().getAttribute("currentUser")).getUserId();
+        User user = (User)request.getSession().getAttribute("currentUser");
+        Long userId = user.getUserId();
 
         List<Question> incorrectQ = questionService.getIncorrectAnsweredQuestions(testId, userAnswers);
         List<Question> basicQuestionList = questionService.findAllByTestId(testId);
@@ -38,6 +43,8 @@ public class CalculateResultCommand implements Command {
 
         Result result = new Result(score, test, userId);
         resultService.saveResult(result);
+
+        mailSender.sendMail(user.getEmail(), test.getName(), score);
 
         request.setAttribute("test_results", incorrectQ);
         request.setAttribute("score", score);
